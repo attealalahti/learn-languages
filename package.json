@@ -19,5 +19,8 @@
   "homepage": "https://github.com/attealalahti/fullstack-project#readme",
   "devDependencies": {
     "eslint": "^8.5.0"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
   }
 }
