@@ -6,6 +6,4 @@ const server = app.listen(port, () => {
     console.log(`Listening on port ${server.address().port}`);
 });
 
-app.get("/", (req, res) => {
-    res.send("test");
-});
+app.use(express.static("frontend/build"));
