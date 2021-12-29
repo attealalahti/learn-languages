@@ -1,0 +1,23 @@
+{
+  "name": "fullstack-project",
+  "version": "1.0.0",
+  "description": "Learn Languages! is a web application that students and teachers can use to learn and teach foreign words. Teachers can submit word pairs that the app will then quiz students on.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/attealalahti/fullstack-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/attealalahti/fullstack-project/issues"
+  },
+  "homepage": "https://github.com/attealalahti/fullstack-project#readme",
+  "devDependencies": {
+    "eslint": "^8.5.0"
+  }
+}
