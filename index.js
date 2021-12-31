@@ -8,6 +8,11 @@ const server = app.listen(port, () => {
     console.log(`Listening on port ${server.address().port}`);
 });
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    next();
+});
+
 app.use(express.static("frontend/build"));
 
 const config = {
