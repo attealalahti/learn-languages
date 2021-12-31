@@ -4,6 +4,7 @@ class TestComponent extends React.Component {
     state = { loading: true, data: undefined };
     async componentDidMount() {
         let data = await fetch(`${getUrl()}/data`);
+        console.log(data);
         let obj = await data.json();
         this.setState({ loading: false, data: obj });
         console.log(obj);
