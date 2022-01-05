@@ -3,7 +3,7 @@ import getUrl from "./getUrl";
 class LearnPage extends React.Component {
     state = { loading: true, data: undefined, currentWordIndex: 0 };
     async componentDidMount() {
-        let data = await fetch(`${getUrl()}/data`);
+        let data = await fetch(`${getUrl()}/words`);
         let obj = await data.json();
         this.setState({ loading: false, data: obj });
     }
