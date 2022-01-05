@@ -20,11 +20,11 @@ module.exports = {
                 }
             });
         }),
-    findFromLanguages: (languageFrom, languageTo) =>
+    findFromLanguages: (language1, language2) =>
         new Promise((resolve, reject) => {
             pool.query(
                 "SELECT * FROM word_pairs WHERE (language1 = ? AND language2 = ?) OR (language1 = ? AND language2 = ?)",
-                [languageFrom, languageTo, languageTo, languageFrom],
+                [language1, language2, language2, language1],
                 (error, wordPairs) => {
                     if (error) {
                         reject(error);
