@@ -1,5 +1,4 @@
 import "./App.css";
-import TestComponent from "./TestComponent";
 import LearnPage from "./LearnPage";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
@@ -14,7 +13,6 @@ function App() {
             <div className="Content">
                 <Routes>
                     <Route path="/learn" element={<LearnPage />}></Route>
-                    <Route path="/" element={<TestComponent />}></Route>
                 </Routes>
             </div>
         </BrowserRouter>
