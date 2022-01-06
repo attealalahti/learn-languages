@@ -1,8 +1,10 @@
 import React from "react";
 import getUrl from "./getUrl";
+import axios from "axios";
 class LearnPage extends React.Component {
     state = {
         loading: true,
+        error: false,
         words: undefined,
         currentWordIndex: 0,
         wordsAnswered: 0,
@@ -10,9 +12,14 @@ class LearnPage extends React.Component {
     };
     currentInput = "";
     async componentDidMount() {
-        let data = await fetch(`${getUrl()}/words?from=finnish&to=english`);
-        let obj = await data.json();
-        this.setState({ loading: false, words: obj });
+        try {
+            let wordsReponse = await axios.get(
+                `${getUrl()}/words?from=finnish&to=english`
+            );
+            this.setState({ loading: false, words: wordsReponse.data });
+        } catch (error) {
+            this.setState({ loading: false, error: true });
+        }
     }
     handleSubmit = (event) => {
         event.preventDefault();
@@ -45,6 +52,14 @@ class LearnPage extends React.Component {
     render() {
         if (this.state.loading) {
             return <div>Loading...</div>;
+        } else if (this.state.error) {
+            return (
+                <div>
+                    Error
+                    <br />
+                    Failed to load page content
+                </div>
+            );
         } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
                 <div>
