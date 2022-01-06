@@ -34,11 +34,16 @@ module.exports = {
                 }
             );
         }),
-    save: (language1, language2, wordInLanguage1, wordInLanguage2) =>
+    save: (wordPair) =>
         new Promise((resolve, reject) => {
             pool.query(
-                "INSERT INTO word_pairs (language1, language2, word_in_language1, word_in_language2) VALUES ?, ?, ?, ?",
-                [language1, language2, wordInLanguage1, wordInLanguage2],
+                "INSERT INTO word_pairs (language1, language2, word_in_language1, word_in_language2) VALUES (?, ?, ?, ?)",
+                [
+                    wordPair.language1,
+                    wordPair.language2,
+                    wordPair.word_in_language1,
+                    wordPair.word_in_language2,
+                ],
                 (error) => {
                     if (error) {
                         reject(error);
