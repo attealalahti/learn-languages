@@ -55,5 +55,13 @@ router.post("/", async (req, res) => {
         }
     }
 });
+router.delete("/:id([0-9]+)", async (req, res) => {
+    let info = await connection.deleteById(req.params.id);
+    if (info.affectedRows > 0) {
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(404);
+    }
+});
 
 module.exports = router;
