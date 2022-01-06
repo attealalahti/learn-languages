@@ -14,4 +14,5 @@ app.use((req, res, next) => {
 
 app.use(express.static("frontend/build"));
 
+app.use(express.json());
 app.use("/words", words);

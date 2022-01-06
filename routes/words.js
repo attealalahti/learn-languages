@@ -30,5 +30,9 @@ router.get("/", async (req, res) => {
         res.status(500).send(error);
     }
 });
+router.post("/", async (req, res) => {
+    await connection.save(req.body);
+    res.status(201).send(req.body);
+});
 
 module.exports = router;
