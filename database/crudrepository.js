@@ -53,4 +53,14 @@ module.exports = {
                 }
             );
         }),
+    deleteById: (id) =>
+        new Promise((resolve, reject) => {
+            pool.query("DELETE FROM word_pairs WHERE id = ?", [id], (error, info) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(info);
+                }
+            });
+        }),
 };
