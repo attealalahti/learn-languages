@@ -2,6 +2,7 @@ import React from "react";
 import getUrl from "./getUrl";
 class LearnPage extends React.Component {
     state = { loading: true, words: undefined, currentWordIndex: 0, wordsAnswered: 0 };
+    currentInput = "";
     async componentDidMount() {
         let data = await fetch(`${getUrl()}/words?from=finnish&to=english`);
         let obj = await data.json();
@@ -18,6 +19,9 @@ class LearnPage extends React.Component {
             wordsAnswered: this.state.wordsAnswered + 1,
         });
     };
+    handleTextInputChange = (event) => {
+        this.currentInput = event.target.value;
+    };
     render() {
         if (this.state.loading) {
             return <div>Loading...</div>;
@@ -29,6 +33,7 @@ class LearnPage extends React.Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <input
+                            onChange={this.handleTextInputChange}
                             type="text"
                             placeholder={`Type in ${
                                 this.state.words[this.state.currentWordIndex].language2
