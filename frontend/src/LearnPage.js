@@ -1,7 +1,13 @@
 import React from "react";
 import getUrl from "./getUrl";
 class LearnPage extends React.Component {
-    state = { loading: true, words: undefined, currentWordIndex: 0, wordsAnswered: 0 };
+    state = {
+        loading: true,
+        words: undefined,
+        currentWordIndex: 0,
+        wordsAnswered: 0,
+        correctWords: 0,
+    };
     currentInput = "";
     async componentDidMount() {
         let data = await fetch(`${getUrl()}/words?from=finnish&to=english`);
@@ -10,6 +16,15 @@ class LearnPage extends React.Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
+        let newCorrectWords = this.state.correctWords;
+        // Check if the user inputted word was correct
+        if (
+            this.currentInput.toLowerCase() ===
+            this.state.words[this.state.currentWordIndex].word_in_language2.toLowerCase()
+        ) {
+            newCorrectWords++;
+        }
+
         let nextIndex = this.state.currentWordIndex + 1;
         if (nextIndex >= this.state.words.length) {
             nextIndex = 0;
@@ -17,6 +32,7 @@ class LearnPage extends React.Component {
         this.setState({
             currentWordIndex: nextIndex,
             wordsAnswered: this.state.wordsAnswered + 1,
+            correctWords: newCorrectWords,
         });
     };
     handleTextInputChange = (event) => {
@@ -25,7 +41,7 @@ class LearnPage extends React.Component {
     render() {
         if (this.state.loading) {
             return <div>Loading...</div>;
-        } else {
+        } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
                 <div>
                     <div>
@@ -45,6 +61,12 @@ class LearnPage extends React.Component {
                         Words answered: {this.state.wordsAnswered}/
                         {this.state.words.length}
                     </div>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    {this.state.correctWords}/{this.state.words.length} correct!
                 </div>
             );
         }
