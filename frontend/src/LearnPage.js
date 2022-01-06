@@ -24,7 +24,11 @@ class LearnPage extends React.Component {
         ) {
             newCorrectWords++;
         }
+        // Clear text input
+        document.getElementById("LearnPageTextInput").value = "";
+        this.currentInput = "";
 
+        // Update values
         let nextIndex = this.state.currentWordIndex + 1;
         if (nextIndex >= this.state.words.length) {
             nextIndex = 0;
@@ -49,11 +53,13 @@ class LearnPage extends React.Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <input
+                            id="LearnPageTextInput"
                             onChange={this.handleTextInputChange}
                             type="text"
                             placeholder={`Type in ${
                                 this.state.words[this.state.currentWordIndex].language2
                             }...`}
+                            autoComplete="off"
                         />
                         <input type="submit" value="Submit" />
                     </form>
