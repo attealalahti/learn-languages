@@ -34,4 +34,18 @@ module.exports = {
                 }
             );
         }),
+    save: (language1, language2, wordInLanguage1, wordInLanguage2) =>
+        new Promise((resolve, reject) => {
+            pool.query(
+                "INSERT INTO word_pairs (language1, language2, word_in_language1, word_in_language2) VALUES ?, ?, ?, ?",
+                [language1, language2, wordInLanguage1, wordInLanguage2],
+                (error) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve("Word pair saved.");
+                    }
+                }
+            );
+        }),
 };
