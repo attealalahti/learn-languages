@@ -1,5 +1,5 @@
 const express = require("express");
-const connection = require("../crudrepository.js");
+const connection = require("../database/crudrepository.js");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
