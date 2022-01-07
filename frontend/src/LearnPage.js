@@ -32,6 +32,13 @@ class LearnPage extends React.Component {
                 textInput.focus();
             }
         }
+        // When coming to the feedback stage, focus next word button
+        else if (!previousState.showFeedback && this.state.showFeedback) {
+            let nextWordButton = document.getElementById("NextWordButton");
+            if (nextWordButton) {
+                nextWordButton.focus();
+            }
+        }
     }
     handleSubmit = (event) => {
         event.preventDefault();
@@ -84,7 +91,9 @@ class LearnPage extends React.Component {
                                 .word_in_language2
                         }
                     />
-                    <button onClick={this.nextWord}>Next</button>
+                    <button id="NextWordButton" onClick={this.nextWord}>
+                        Next
+                    </button>
                 </div>
             );
         } else if (this.state.wordsAnswered !== this.state.words.length) {
