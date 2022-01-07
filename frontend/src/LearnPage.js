@@ -1,6 +1,7 @@
 import React from "react";
 import getUrl from "./getUrl";
 import axios from "axios";
+import Feedback from "./Feedback";
 class LearnPage extends React.Component {
     state = {
         loading: true,
@@ -9,6 +10,7 @@ class LearnPage extends React.Component {
         currentWordIndex: 0,
         wordsAnswered: 0,
         correctWords: 0,
+        showFeedback: false,
     };
     currentInput = "";
     async componentDidMount() {
@@ -44,6 +46,7 @@ class LearnPage extends React.Component {
             currentWordIndex: nextIndex,
             wordsAnswered: this.state.wordsAnswered + 1,
             correctWords: newCorrectWords,
+            showFeedback: true,
         });
     };
     handleTextInputChange = (event) => {
@@ -60,6 +63,8 @@ class LearnPage extends React.Component {
                     Failed to load page content
                 </div>
             );
+        } else if (this.state.showFeedback) {
+            return <Feedback continue={() => this.setState({ showFeedback: false })} />;
         } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
                 <div>
