@@ -11,6 +11,7 @@ class LearnPage extends React.Component {
         wordsAnswered: 0,
         correctWords: 0,
         showFeedback: false,
+        answerCorrect: false,
     };
     currentInput = "";
     async componentDidMount() {
@@ -27,30 +28,31 @@ class LearnPage extends React.Component {
         event.preventDefault();
         let newCorrectWords = this.state.correctWords;
         // Check if the user inputted word was correct
-        if (
+        let answerCorrect =
             this.currentInput.toLowerCase() ===
-            this.state.words[this.state.currentWordIndex].word_in_language2.toLowerCase()
-        ) {
+            this.state.words[this.state.currentWordIndex].word_in_language2.toLowerCase();
+        if (answerCorrect) {
             newCorrectWords++;
         }
         // Clear text input
         document.getElementById("LearnPageTextInput").value = "";
         this.currentInput = "";
 
-        // Update values
-        let nextIndex = this.state.currentWordIndex + 1;
-        if (nextIndex >= this.state.words.length) {
-            nextIndex = 0;
-        }
         this.setState({
-            currentWordIndex: nextIndex,
             wordsAnswered: this.state.wordsAnswered + 1,
             correctWords: newCorrectWords,
             showFeedback: true,
+            answerCorrect: answerCorrect,
         });
     };
     handleTextInputChange = (event) => {
         this.currentInput = event.target.value;
+    };
+    nextWord = () => {
+        this.setState({
+            showFeedback: false,
+            currentWordIndex: this.state.currentWordIndex + 1,
+        });
     };
     render() {
         if (this.state.loading) {
@@ -64,7 +66,13 @@ class LearnPage extends React.Component {
                 </div>
             );
         } else if (this.state.showFeedback) {
-            return <Feedback continue={() => this.setState({ showFeedback: false })} />;
+            return (
+                <Feedback
+                    answerCorrect={this.state.answerCorrect}
+                    correctWord={this.state.words[this.state.currentWordIndex]}
+                    nextWord={this.nextWord}
+                />
+            );
         } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
                 <div>
