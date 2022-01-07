@@ -2,7 +2,15 @@ import React from "react";
 
 class Feedback extends React.Component {
     render() {
-        return <div>feedback</div>;
+        if (this.props.answerCorrect) {
+            return <div>Correct!</div>;
+        } else {
+            return (
+                <div>
+                    Incorrect. The correct answer was <b>{this.props.correctWord}</b>.
+                </div>
+            );
+        }
     }
 }
 

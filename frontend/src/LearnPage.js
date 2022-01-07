@@ -70,7 +70,10 @@ class LearnPage extends React.Component {
                 <div>
                     <Feedback
                         answerCorrect={this.state.answerCorrect}
-                        correctWord={this.state.words[this.state.currentWordIndex]}
+                        correctWord={
+                            this.state.words[this.state.currentWordIndex]
+                                .word_in_language2
+                        }
                     />
                     <button onClick={this.nextWord}>Next</button>
                 </div>
@@ -102,7 +105,7 @@ class LearnPage extends React.Component {
         } else {
             return (
                 <div>
-                    {this.state.correctWords}/{this.state.words.length} correct!
+                    You got {this.state.correctWords}/{this.state.words.length} correct!
                 </div>
             );
         }
