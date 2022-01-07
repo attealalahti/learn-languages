@@ -13,10 +13,10 @@ class LearnPage extends React.Component {
     currentInput = "";
     async componentDidMount() {
         try {
-            let wordsReponse = await axios.get(
+            let wordsResponse = await axios.get(
                 `${getUrl()}/words?from=finnish&to=english`
             );
-            this.setState({ loading: false, words: wordsReponse.data });
+            this.setState({ loading: false, words: wordsResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
