@@ -24,6 +24,15 @@ class LearnPage extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    componentDidUpdate(previousProps, previousState) {
+        // When coming from the feedback stage, focus text input
+        if (previousState.showFeedback && !this.state.showFeedback) {
+            let textInput = document.getElementById("LearnPageTextInput");
+            if (textInput) {
+                textInput.focus();
+            }
+        }
+    }
     handleSubmit = (event) => {
         event.preventDefault();
         let newCorrectWords = this.state.correctWords;
