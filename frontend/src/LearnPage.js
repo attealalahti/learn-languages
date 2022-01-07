@@ -67,11 +67,13 @@ class LearnPage extends React.Component {
             );
         } else if (this.state.showFeedback) {
             return (
-                <Feedback
-                    answerCorrect={this.state.answerCorrect}
-                    correctWord={this.state.words[this.state.currentWordIndex]}
-                    nextWord={this.nextWord}
-                />
+                <div>
+                    <Feedback
+                        answerCorrect={this.state.answerCorrect}
+                        correctWord={this.state.words[this.state.currentWordIndex]}
+                    />
+                    <button onClick={this.nextWord}>Next</button>
+                </div>
             );
         } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
