@@ -37,6 +37,7 @@ class LearnOptions extends React.Component {
         } else {
             return (
                 <div>
+                    <div>Choose languages to study.</div>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="from">From:</label>
                         <select id="from">
