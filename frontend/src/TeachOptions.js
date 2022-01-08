@@ -15,11 +15,12 @@ class TeachOptions extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         if (
-            document.getElementById("from").value !== document.getElementById("to").value
+            document.getElementById("lang1").value !==
+            document.getElementById("lang2").value
         ) {
             this.props.continue(
-                document.getElementById("from").value,
-                document.getElementById("to").value
+                document.getElementById("lang1").value,
+                document.getElementById("lang2").value
             );
         }
     };
@@ -37,16 +38,16 @@ class TeachOptions extends React.Component {
         } else {
             return (
                 <div>
-                    <div>Choose languages to study.</div>
+                    <div>Choose languages to add words to.</div>
                     <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="from">From:</label>
-                        <select id="from">
+                        <label htmlFor="lang1">Language 1:</label>
+                        <select id="lang1">
                             {this.state.languages.map((lang) => {
                                 return <option key={lang.id}>{lang.language}</option>;
                             })}
                         </select>
-                        <label htmlFor="to">To:</label>
-                        <select id="to">
+                        <label htmlFor="lang2">Language 2:</label>
+                        <select id="lang2">
                             {this.state.languages.map((lang) => {
                                 return <option key={lang.id}>{lang.language}</option>;
                             })}
