@@ -13,8 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static("frontend/build"));
-
 app.use(express.json());
 app.use("/words", words);
 app.use("/languages", languages);
+app.use(express.static("frontend/build"));
