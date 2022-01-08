@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
             });
             res.send(reorderedWords);
         } else {
-            let allWords = await connection.findAll();
+            let allWords = await connection.findAllWordPairs();
             res.send(allWords);
         }
     } catch (error) {
