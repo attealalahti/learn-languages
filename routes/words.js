@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 });
 router.delete("/:id([0-9]+)", async (req, res) => {
     try {
-        let info = await connection.deleteById(req.params.id);
+        let info = await connection.deleteWordPairById(req.params.id);
         if (info.affectedRows > 0) {
             res.sendStatus(204);
         } else {

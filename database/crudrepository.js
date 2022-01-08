@@ -56,7 +56,7 @@ module.exports = {
                 }
             );
         }),
-    deleteById: (id) =>
+    deleteWordPairById: (id) =>
         new Promise((resolve, reject) => {
             pool.query("DELETE FROM word_pairs WHERE id = ?", [id], (error, info) => {
                 if (error) {
