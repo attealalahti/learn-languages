@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
             let reorderedWords = [];
             // Flip languages around if necessary to keep languages "from" and "to" consistent
             words.forEach((word) => {
-                if (word.language1.toLowerCase() === req.query.from) {
+                if (word.language1.toLowerCase() === req.query.from.toLowerCase()) {
                     reorderedWords.push(word);
                 } else {
                     reorderedWords.push({
