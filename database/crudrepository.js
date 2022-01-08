@@ -66,4 +66,14 @@ module.exports = {
                 }
             });
         }),
+    findAllLanguages: () =>
+        new Promise((resolve, reject) => {
+            pool.query("SELECT * FROM languages", (error, languages) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(languages);
+                }
+            });
+        }),
 };
