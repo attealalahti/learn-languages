@@ -21,3 +21,7 @@ header a:hover {
 .Content {
     text-align: center;
 }
+.GridContainer {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}

@@ -28,7 +28,26 @@ class EditWordPairs extends React.Component {
                 </div>
             );
         } else {
-            return <div>Edit word pairs</div>;
+            return (
+                <div className="GridContainer">
+                    <div>
+                        <div>{this.state.words[0].language1}</div>
+                        {this.state.words.map((wordPair) => {
+                            return (
+                                <div key={wordPair.id}>{wordPair.word_in_language1}</div>
+                            );
+                        })}
+                    </div>
+                    <div>
+                        <div>{this.state.words[0].language2}</div>
+                        {this.state.words.map((wordPair) => {
+                            return (
+                                <div key={wordPair.id}>{wordPair.word_in_language2}</div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
         }
     }
 }
