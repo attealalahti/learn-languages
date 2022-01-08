@@ -12,6 +12,13 @@ class LearnOptions extends React.Component {
             this.setState({ loading: false, error: true });
         }
     };
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.continue(
+            document.getElementById("from").value,
+            document.getElementById("to").value
+        );
+    };
     render() {
         if (this.state.loading) {
             return <div>Loading...</div>;
@@ -26,7 +33,7 @@ class LearnOptions extends React.Component {
         } else {
             return (
                 <div>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <label htmlFor="from">From:</label>
                         <select id="from">
                             {this.state.languages.map((lang) => {
