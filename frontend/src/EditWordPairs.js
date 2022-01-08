@@ -1,9 +1,9 @@
 import React from "react";
 
-class EditWordPair extends React.Component {
+class EditWordPairs extends React.Component {
     render() {
         return <div>Edit word pairs</div>;
     }
 }
 
-export default EditWordPair;
+export default EditWordPairs;
