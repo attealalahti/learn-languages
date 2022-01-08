@@ -19,5 +19,16 @@ CREATE TABLE word_pairs (
 
 INSERT INTO languages (language) VALUES ("Finnish");
 INSERT INTO languages (language) VALUES ("English");
+INSERT INTO languages (language) VALUES ("Swedish");
 
-INSERT INTO word_pairs (language1_id, language2_id, word_in_language1, word_in_language2) VALUES (3, 5, "sana", "word");
+INSERT INTO word_pairs (language1_id, language2_id, word_in_language1, word_in_language2) VALUES (6, 5, "bra", "good");
+
+SELECT w.id, l1.language AS language1, l2.language AS language2, w.word_in_language1, w.word_in_language2
+FROM ((word_pairs AS w
+INNER JOIN languages AS l1 ON w.language1_id = l1.id)
+INNER JOIN languages AS l2 ON w.language2_id = l2.id)
+WHERE (l1.language = "Finnish" AND l2.language = "English")
+OR
+(l1.language = "English" AND l2.language = "Finnish");
+
+SELECT * FROM languages;
