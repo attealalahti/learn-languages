@@ -17,7 +17,10 @@ const schema = {
 router.get("/", async (req, res) => {
     try {
         if (req.query.to && req.query.from) {
-            let words = await connection.findByLanguages(req.query.from, req.query.to);
+            let words = await connection.findWordPairsByLanguages(
+                req.query.from,
+                req.query.to
+            );
             let reorderedWords = [];
             // Flip languages around if necessary to keep languages "from" and "to" consistent
             words.forEach((word) => {

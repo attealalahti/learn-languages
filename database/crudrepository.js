@@ -23,7 +23,7 @@ module.exports = {
                 }
             );
         }),
-    findByLanguages: (language1, language2) =>
+    findWordPairsByLanguages: (language1, language2) =>
         new Promise((resolve, reject) => {
             pool.query(
                 "SELECT w.id, l1.language AS language1, l2.language AS language2, w.word_in_language1, w.word_in_language2 FROM ((word_pairs AS w INNER JOIN languages AS l1 ON w.language1_id = l1.id) INNER JOIN languages AS l2 ON w.language2_id = l2.id) WHERE (l1.language = ? AND l2.language = ?) OR (l1.language = ? AND l2.language = ?)",
