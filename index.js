@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const words = require("./routes/words.js");
+const languages = require("./routes/languages.js");
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
@@ -16,3 +17,4 @@ app.use(express.static("frontend/build"));
 
 app.use(express.json());
 app.use("/words", words);
+app.use("/languages", languages);
