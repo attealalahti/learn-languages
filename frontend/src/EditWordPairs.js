@@ -31,7 +31,7 @@ class EditWordPairs extends React.Component {
             return (
                 <div className="GridContainer">
                     <div>
-                        <div>{this.state.words[0].language1}</div>
+                        <div>{this.props.language1}</div>
                         {this.state.words.map((wordPair) => {
                             return (
                                 <div key={wordPair.id}>{wordPair.word_in_language1}</div>
@@ -39,7 +39,7 @@ class EditWordPairs extends React.Component {
                         })}
                     </div>
                     <div>
-                        <div>{this.state.words[0].language2}</div>
+                        <div>{this.props.language2}</div>
                         {this.state.words.map((wordPair) => {
                             return (
                                 <div key={wordPair.id}>{wordPair.word_in_language2}</div>
