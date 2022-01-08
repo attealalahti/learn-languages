@@ -40,10 +40,10 @@ module.exports = {
     saveWordPair: (wordPair) =>
         new Promise((resolve, reject) => {
             pool.query(
-                "INSERT INTO word_pairs (language1, language2, word_in_language1, word_in_language2) VALUES (?, ?, ?, ?)",
+                "INSERT INTO word_pairs (language1_id, language2_id, word_in_language1, word_in_language2) VALUES (?, ?, ?, ?)",
                 [
-                    wordPair.language1,
-                    wordPair.language2,
+                    wordPair.language1_id,
+                    wordPair.language2_id,
                     wordPair.word_in_language1,
                     wordPair.word_in_language2,
                 ],
