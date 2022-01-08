@@ -30,9 +30,14 @@ class EditWordPairs extends React.Component {
             );
         } else {
             return (
-                <div>
-                    <div>
-                        {this.props.language1} {this.props.language2}
+                <div className="WordPairs">
+                    <div className="Languages">
+                        <div></div>
+                        <div className="LanguageContainer">
+                            <span>{this.props.language1}</span>
+                            <span>{this.props.language2}</span>
+                        </div>
+                        <div></div>
                     </div>
                     {this.state.words.map((wordPair) => (
                         <WordPair key={wordPair.id} wordPair={wordPair} />

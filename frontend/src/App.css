@@ -21,3 +21,40 @@ header a:hover {
 .Content {
     text-align: center;
 }
+
+.WordPairs {
+    width: 450px;
+    margin: 10px auto;
+}
+.WordPair {
+    display: grid;
+    grid-template-columns: 42px auto 42px 60px;
+}
+.WordContainer {
+    display: flex;
+}
+.WordInLanguage1,
+.WordInLanguage2 {
+    padding: 5px 10px;
+    width: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+.WordInLanguage1 {
+    text-align: left;
+}
+.WordInLanguage2 {
+    text-align: right;
+}
+
+.Languages {
+    display: grid;
+    grid-template-columns: 42px auto 102px;
+}
+.LanguageContainer {
+    display: flex;
+}
+.LanguageContainer span {
+    width: 50%;
+}
