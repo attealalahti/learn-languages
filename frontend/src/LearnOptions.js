@@ -14,10 +14,14 @@ class LearnOptions extends React.Component {
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.continue(
-            document.getElementById("from").value,
-            document.getElementById("to").value
-        );
+        if (
+            document.getElementById("from").value !== document.getElementById("to").value
+        ) {
+            this.props.continue(
+                document.getElementById("from").value,
+                document.getElementById("to").value
+            );
+        }
     };
     render() {
         if (this.state.loading) {
