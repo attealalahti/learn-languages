@@ -1,6 +1,7 @@
 import "./App.css";
 import LearnPage from "./LearnPage";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import TeachPage from "./TeachPage";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <div className="Content">
                 <Routes>
                     <Route path="/learn" element={<LearnPage />}></Route>
+                    <Route path="/teach" element={<TeachPage />}></Route>
                 </Routes>
             </div>
         </BrowserRouter>
