@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
         res.status(400).send(validation.errors);
     } else {
         try {
-            await connection.save(req.body);
+            await connection.saveWordPair(req.body);
             res.status(201).send(req.body);
         } catch (error) {
             res.status(500).send(error);
