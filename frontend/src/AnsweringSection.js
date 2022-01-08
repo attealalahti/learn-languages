@@ -17,7 +17,9 @@ class AnsweringSection extends React.Component {
     async componentDidMount() {
         try {
             let wordsResponse = await axios.get(
-                `${getUrl()}/words?from=finnish&to=english`
+                `${getUrl()}/words?from=${this.props.languageFrom}&to=${
+                    this.props.languageTo
+                }`
             );
             this.setState({ loading: false, words: wordsResponse.data });
         } catch (error) {
