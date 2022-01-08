@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import getUrl from "./getUrl";
+import WordPair from "./WordPair";
 
 class EditWordPairs extends React.Component {
     state = { loading: true, error: false, words: undefined };
@@ -29,23 +30,13 @@ class EditWordPairs extends React.Component {
             );
         } else {
             return (
-                <div className="GridContainer">
+                <div>
                     <div>
-                        <div>{this.props.language1}</div>
-                        {this.state.words.map((wordPair) => {
-                            return (
-                                <div key={wordPair.id}>{wordPair.word_in_language1}</div>
-                            );
-                        })}
+                        {this.props.language1} {this.props.language2}
                     </div>
-                    <div>
-                        <div>{this.props.language2}</div>
-                        {this.state.words.map((wordPair) => {
-                            return (
-                                <div key={wordPair.id}>{wordPair.word_in_language2}</div>
-                            );
-                        })}
-                    </div>
+                    {this.state.words.map((wordPair) => (
+                        <WordPair key={wordPair.id} wordPair={wordPair} />
+                    ))}
                 </div>
             );
         }
