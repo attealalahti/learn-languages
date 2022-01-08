@@ -26,9 +26,22 @@ class LearnOptions extends React.Component {
         } else {
             return (
                 <div>
-                    {this.state.languages.map((lang) => {
-                        return <div>{lang.language}</div>;
-                    })}
+                    <form>
+                        <label htmlFor="from">From:</label>
+                        <select id="from">
+                            {this.state.languages.map((lang) => {
+                                return <option key={lang.id}>{lang.language}</option>;
+                            })}
+                        </select>
+                        <label htmlFor="to">To:</label>
+                        <select id="to">
+                            {this.state.languages.map((lang) => {
+                                return <option key={lang.id}>{lang.language}</option>;
+                            })}
+                        </select>
+                        <br />
+                        <input type="submit" value="Confirm" />
+                    </form>
                 </div>
             );
         }
