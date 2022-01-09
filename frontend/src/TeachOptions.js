@@ -14,14 +14,16 @@ class TeachOptions extends React.Component {
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        if (
-            document.getElementById("lang1").value !==
-            document.getElementById("lang2").value
-        ) {
-            this.props.continue(
-                document.getElementById("lang1").value,
-                document.getElementById("lang2").value
-            );
+        let language1Id = Number(document.getElementById("lang1").value);
+        let language2Id = Number(document.getElementById("lang2").value);
+        if (language1Id !== language2Id) {
+            let language1 = this.state.languages.find(
+                (lang) => lang.id === language1Id
+            ).language;
+            let language2 = this.state.languages.find(
+                (lang) => lang.id === language2Id
+            ).language;
+            this.props.continue(language1Id, language2Id, language1, language2);
         }
     };
     render() {
@@ -43,13 +45,21 @@ class TeachOptions extends React.Component {
                         <label htmlFor="lang1">Language 1:</label>
                         <select id="lang1">
                             {this.state.languages.map((lang) => {
-                                return <option key={lang.id}>{lang.language}</option>;
+                                return (
+                                    <option key={lang.id} value={lang.id}>
+                                        {lang.language}
+                                    </option>
+                                );
                             })}
                         </select>
                         <label htmlFor="lang2">Language 2:</label>
                         <select id="lang2">
                             {this.state.languages.map((lang) => {
-                                return <option key={lang.id}>{lang.language}</option>;
+                                return (
+                                    <option key={lang.id} value={lang.id}>
+                                        {lang.language}
+                                    </option>
+                                );
                             })}
                         </select>
                         <br />
