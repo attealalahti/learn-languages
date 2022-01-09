@@ -2,6 +2,7 @@ import "./App.css";
 import LearnPage from "./LearnPage";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import TeachPage from "./TeachPage";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
     return (
