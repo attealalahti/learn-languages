@@ -37,6 +37,20 @@ module.exports = {
                 }
             );
         }),
+    findWordPairById: (id) =>
+        new Promise((resolve, reject) => {
+            pool.query(
+                "SELECT * FROM word_pairs WHERE id = ?",
+                [id],
+                (error, wordPair) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(wordPair);
+                    }
+                }
+            );
+        }),
     saveWordPair: (wordPair) =>
         new Promise((resolve, reject) => {
             pool.query(
@@ -65,6 +79,20 @@ module.exports = {
                     resolve(info);
                 }
             });
+        }),
+    updateWordPair: (wordPair) =>
+        new Promise((resolve, reject) => {
+            pool.query(
+                "UPDATE word_pairs SET word_in_language1 = ?, word_in_language2 = ? WHERE id = ?",
+                [wordPair.word_in_language1, wordPair.word_in_language2, wordPair.id],
+                (error, info) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(info);
+                    }
+                }
+            );
         }),
     findAllLanguages: () =>
         new Promise((resolve, reject) => {
