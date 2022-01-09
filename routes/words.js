@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
         res.status(500).send(error);
     }
 });
-const schema = {
+const postSchema = {
     type: "object",
     properties: {
         language1_id: { type: "number", min: 0 },
@@ -46,7 +46,7 @@ const schema = {
     required: ["language1_id", "language2_id", "word_in_language1", "word_in_language2"],
 };
 router.post("/", async (req, res) => {
-    const validation = validator.validate(req.body, schema);
+    const validation = validator.validate(req.body, postSchema);
     if (validation.errors.length > 0) {
         res.status(400).send(validation.errors);
     } else {
@@ -70,8 +70,25 @@ router.delete("/:id([0-9]+)", async (req, res) => {
         res.status(500).send(error);
     }
 });
+const patchSchema = {
+    type: "object",
+    properties: {
+        id: { type: "number", min: 0 },
+        language1_id: { type: "number", min: 0 },
+        language2_id: { type: "number", min: 0 },
+        word_in_language1: { type: "string" },
+        word_in_language2: { type: "string" },
+    },
+    required: [
+        "id",
+        "language1_id",
+        "language2_id",
+        "word_in_language1",
+        "word_in_language2",
+    ],
+};
 router.patch("/", async (req, res) => {
-    const validation = validator.validate(req.body, schema);
+    const validation = validator.validate(req.body, patchSchema);
     if (validation.errors.length > 0) {
         res.status(400).send(validation.errors);
     } else {
@@ -82,7 +99,7 @@ router.patch("/", async (req, res) => {
                 newWordPair = req.body;
             } else {
                 newWordPair = {
-                    ...req.body,
+                    id: req.body.id,
                     language1_id: req.body.language2_id,
                     language2_id: req.body.language1_id,
                     word_in_language1: req.body.word_in_language2,
