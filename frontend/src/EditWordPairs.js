@@ -41,7 +41,7 @@ class EditWordPairs extends React.Component {
         let allInputs = Array.from(event.target);
         let allWords = allInputs.filter((input) => input.type === "text");
         let wordPairPatches = [];
-        // Go through all words and add all word pairs that don't match their database versions to array
+        // Go through all old words and add all patches of word pairs that don't match their database versions to array
         for (let i = 0; i < this.wordPairsInDatabase.length; i++) {
             if (
                 allWords[i * 2].value !== this.wordPairsInDatabase[i].word_in_language1 ||
@@ -59,8 +59,25 @@ class EditWordPairs extends React.Component {
                 );
             }
         }
+        let wordPairPosts = [];
+        // Add posts of all new word pairs to array
+        for (
+            let i = this.wordPairsInDatabase.length;
+            i < this.state.wordPairs.length;
+            i++
+        ) {
+            wordPairPosts.push(
+                axios.post(`${getUrl()}/words`, {
+                    language1_id: this.props.language1Id,
+                    language2_id: this.props.language2Id,
+                    word_in_language1: allWords[i * 2].value,
+                    word_in_language2: allWords[i * 2 + 1].value,
+                })
+            );
+        }
+        let allRequests = wordPairPatches.concat(wordPairPosts);
         this.setState({ savingState: "saving" });
-        await Promise.all(wordPairPatches);
+        await Promise.all(allRequests);
         this.setState({ savingState: "saved" });
     };
     getSaveDisplay(elementType) {
@@ -142,6 +159,7 @@ class EditWordPairs extends React.Component {
                         <Spinner
                             animation="border"
                             role="status"
+                            variant="success"
                             style={{
                                 float: "right",
                                 display: this.getSaveDisplay("spinner"),
