@@ -7,7 +7,8 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 
 class EditWordPairs extends React.Component {
-    state = { loading: true, error: false, words: undefined };
+    state = { loading: true, error: false, words: [] };
+    index = 0;
     async componentDidMount() {
         try {
             let wordsResponse = await axios.get(
@@ -20,6 +21,19 @@ class EditWordPairs extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    addRow = () => {
+        let newWords = [
+            ...this.state.words,
+            {
+                id: "new" + this.index++,
+                language1: this.props.language1,
+                language2: this.props.language2,
+                word_in_language1: "",
+                word_in_language2: "",
+            },
+        ];
+        this.setState({ words: newWords });
+    };
     render() {
         if (this.state.loading) {
             return (
@@ -62,7 +76,9 @@ class EditWordPairs extends React.Component {
                             ))}
                         </tbody>
                     </Table>
-                    <Button className="AddRowButton">Add row</Button>{" "}
+                    <Button className="AddRowButton" onClick={this.addRow}>
+                        Add row
+                    </Button>{" "}
                     <Button className="SaveChangesButton" variant="success">
                         Save changes
                     </Button>
