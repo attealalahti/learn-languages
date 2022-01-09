@@ -5,9 +5,10 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 
 class EditWordPairs extends React.Component {
-    state = { loading: true, error: false, wordPairs: [] };
+    state = { loading: true, error: false, wordPairs: [], savingState: "none" };
     wordPairsInDatabase;
     async componentDidMount() {
         try {
@@ -58,8 +59,19 @@ class EditWordPairs extends React.Component {
                 );
             }
         }
+        this.setState({ savingState: "saving" });
         await Promise.all(wordPairPatches);
+        this.setState({ savingState: "saved" });
     };
+    getSaveDisplay(elementType) {
+        if (
+            (this.state.savingState === "saving" && elementType === "button") ||
+            (this.state.savingState !== "saved" && elementType === "alert") ||
+            (this.state.savingState !== "saving" && elementType === "spinner")
+        ) {
+            return "none";
+        }
+    }
 
     render() {
         if (this.state.loading) {
@@ -112,18 +124,40 @@ class EditWordPairs extends React.Component {
                         </Table>
                         <Button
                             as="button"
-                            className="AddRowButton"
+                            style={{ float: "left" }}
                             onClick={this.addRow}
                         >
                             Add row
                         </Button>
                         <Button
                             type="submit"
-                            className="SaveChangesButton"
                             variant="success"
+                            style={{
+                                float: "right",
+                                display: this.getSaveDisplay("button"),
+                            }}
                         >
                             Save changes
                         </Button>
+                        <Spinner
+                            animation="border"
+                            role="status"
+                            style={{
+                                float: "right",
+                                display: this.getSaveDisplay("spinner"),
+                            }}
+                        >
+                            <span className="visually-hidden">Saving...</span>
+                        </Spinner>
+                        <Alert
+                            variant="success"
+                            style={{
+                                float: "right",
+                                display: this.getSaveDisplay("alert"),
+                            }}
+                        >
+                            Saved!
+                        </Alert>
                     </Form>
                 </div>
             );

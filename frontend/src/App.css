@@ -33,9 +33,6 @@ tbody tr {
 td input {
     width: 100%;
 }
-.AddRowButton {
-    float: left;
-}
-.SaveChangesButton {
-    float: right;
+.alert {
+    margin-right: 10px;
 }
