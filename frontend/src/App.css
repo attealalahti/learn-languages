@@ -30,6 +30,9 @@ header a:hover {
 tbody tr {
     text-align: left;
 }
+td input {
+    width: 100%;
+}
 .AddRowButton {
     float: left;
 }
