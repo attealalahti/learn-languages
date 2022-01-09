@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import getUrl from "./getUrl";
-import WordPair from "./WordPair";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
