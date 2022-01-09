@@ -77,7 +77,7 @@ class EditWordPairs extends React.Component {
                     </Table>
                     <Button className="AddRowButton" onClick={this.addRow}>
                         Add row
-                    </Button>{" "}
+                    </Button>
                     <Button className="SaveChangesButton" variant="success">
                         Save changes
                     </Button>
