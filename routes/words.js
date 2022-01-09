@@ -70,5 +70,36 @@ router.delete("/:id([0-9]+)", async (req, res) => {
         res.status(500).send(error);
     }
 });
+router.patch("/", async (req, res) => {
+    const validation = validator.validate(req.body, schema);
+    if (validation.errors.length > 0) {
+        res.status(400).send(validation.errors);
+    } else {
+        try {
+            let currentWordPair = (await connection.findWordPairById(req.body.id))[0];
+            let newWordPair;
+            if (req.body.language1_id === currentWordPair.language1_id) {
+                newWordPair = req.body;
+            } else {
+                newWordPair = {
+                    ...req.body,
+                    language1_id: req.body.language2_id,
+                    language2_id: req.body.language1_id,
+                    word_in_language1: req.body.word_in_language2,
+                    word_in_language2: req.body.word_in_language1,
+                };
+            }
+            let info = await connection.updateWordPair(newWordPair);
+            if (info.changedRows > 0) {
+                res.status(201).send(newWordPair);
+            } else {
+                res.sendStatus(204);
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
+});
 
 module.exports = router;
