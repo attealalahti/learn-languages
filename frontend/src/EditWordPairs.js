@@ -68,20 +68,20 @@ class EditWordPairs extends React.Component {
             );
         } else {
             return (
-                <Card className="Container">
+                <Card>
                     <Card.Body>
-                        <Table striped bordered onChange={this.handleChange}>
+                        <Table striped bordered>
                             <thead>
                                 <tr>
-                                    <th className="WordColumn">{this.props.language1}</th>
-                                    <th className="WordColumn">{this.props.language2}</th>
+                                    <th>{this.props.language1}</th>
+                                    <th>{this.props.language2}</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody id="table">
+                            <tbody>
                                 {this.state.wordPairs.map((wordPair, index) => (
                                     <tr key={index}>
-                                        <th className="WordColumn">
+                                        <th>
                                             <EditableWord
                                                 id={wordPair.id}
                                                 word={wordPair.word_in_language1}
@@ -90,7 +90,7 @@ class EditWordPairs extends React.Component {
                                                 updateWordPairs={this.updateWordPairs}
                                             />
                                         </th>
-                                        <th className="WordColumn">
+                                        <th>
                                             <EditableWord
                                                 id={wordPair.id}
                                                 word={wordPair.word_in_language2}
