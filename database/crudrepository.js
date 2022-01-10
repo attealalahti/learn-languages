@@ -104,4 +104,14 @@ module.exports = {
                 }
             });
         }),
+    saveLanguage: (language) =>
+        new Promise((resolve, reject) => {
+            pool.query("CALL AddLanguage(?)", [language], (error, out) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(out[0][0]["LAST_INSERT_ID()"]);
+                }
+            });
+        }),
 };
