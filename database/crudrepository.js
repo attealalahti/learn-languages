@@ -128,4 +128,14 @@ module.exports = {
                 }
             );
         }),
+    deleteLanguageById: (id) =>
+        new Promise((resolve, reject) => {
+            pool.query("DELETE FROM languages WHERE id = ?", [id], (error, info) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(info);
+                }
+            });
+        }),
 };
