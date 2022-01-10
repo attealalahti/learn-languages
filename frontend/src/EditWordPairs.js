@@ -4,12 +4,14 @@ import getUrl from "./getUrl";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import EditableWord from "./EditableWord";
 
 class EditWordPairs extends React.Component {
-    state = { loading: true, error: false, wordPairs: [], savingState: "none" };
-    wordPairsInDatabase;
+    state = {
+        loading: true,
+        error: false,
+        wordPairs: [],
+    };
     async componentDidMount() {
         try {
             let wordsResponse = await axios.get(
@@ -17,79 +19,38 @@ class EditWordPairs extends React.Component {
                     this.props.language2
                 }`
             );
-            this.wordPairsInDatabase = wordsResponse.data;
+            this.wordPairsInDatabase = Array.from(wordsResponse.data);
             this.setState({ loading: false, wordPairs: wordsResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
     }
-    addRow = () => {
-        let newWordPairs = [
-            ...this.state.wordPairs,
-            {
-                id: "new",
-                language1: this.props.language1,
-                language2: this.props.language2,
-                word_in_language1: "",
-                word_in_language2: "",
-            },
-        ];
+    addRow = async () => {
+        let newWordPair = {
+            language1: this.props.language1,
+            language2: this.props.language2,
+            language1_id: this.props.language1Id,
+            language2_id: this.props.language2Id,
+            word_in_language1: "",
+            word_in_language2: "",
+        };
+        let newWordPairResponse = await axios.post(`${getUrl()}/words`, newWordPair);
+        let newWordPairs = [...this.state.wordPairs, newWordPairResponse.data];
         this.setState({ wordPairs: newWordPairs });
     };
-    saveChanges = async (event) => {
-        event.preventDefault();
-        let allInputs = Array.from(event.target);
-        let allWords = allInputs.filter((input) => input.type === "text");
-        let wordPairPatches = [];
-        // Go through all old words and add all patches of word pairs that don't match their database versions to array
-        for (let i = 0; i < this.wordPairsInDatabase.length; i++) {
-            if (
-                allWords[i * 2].value !== this.wordPairsInDatabase[i].word_in_language1 ||
-                allWords[i * 2 + 1].value !==
-                    this.wordPairsInDatabase[i].word_in_language2
-            ) {
-                wordPairPatches.push(
-                    axios.patch(`${getUrl()}/words`, {
-                        id: this.wordPairsInDatabase[i].id,
-                        language1_id: this.props.language1Id,
-                        language2_id: this.props.language2Id,
-                        word_in_language1: allWords[i * 2].value,
-                        word_in_language2: allWords[i * 2 + 1].value,
-                    })
-                );
-            }
-        }
-        let wordPairPosts = [];
-        // Add posts of all new word pairs to array
-        for (
-            let i = this.wordPairsInDatabase.length;
-            i < this.state.wordPairs.length;
-            i++
-        ) {
-            wordPairPosts.push(
-                axios.post(`${getUrl()}/words`, {
-                    language1_id: this.props.language1Id,
-                    language2_id: this.props.language2Id,
-                    word_in_language1: allWords[i * 2].value,
-                    word_in_language2: allWords[i * 2 + 1].value,
-                })
-            );
-        }
-        let allRequests = wordPairPatches.concat(wordPairPosts);
-        this.setState({ savingState: "saving" });
-        await Promise.all(allRequests);
-        this.setState({ savingState: "saved" });
+    deleteRow = async (id) => {
+        let newWordPairs = this.state.wordPairs.filter((wordPair) => wordPair.id !== id);
+        await axios.delete(`${getUrl()}/words/${id}`);
+        this.setState({ wordPairs: newWordPairs });
     };
-    getSaveDisplay(elementType) {
-        if (
-            (this.state.savingState === "saving" && elementType === "button") ||
-            (this.state.savingState !== "saved" && elementType === "alert") ||
-            (this.state.savingState !== "saving" && elementType === "spinner")
-        ) {
-            return "none";
-        }
-    }
-
+    updateWordPairs = (updatedWordPair) => {
+        let index = this.state.wordPairs.findIndex(
+            (wordPair) => wordPair.id === updatedWordPair.id
+        );
+        let newWordPairs = Array.from(this.state.wordPairs);
+        newWordPairs.splice(index, 1, updatedWordPair);
+        this.setState({ wordPairs: newWordPairs });
+    };
     render() {
         if (this.state.loading) {
             return (
@@ -108,75 +69,50 @@ class EditWordPairs extends React.Component {
         } else {
             return (
                 <div className="TableContainer">
-                    <Form onSubmit={this.saveChanges}>
-                        <Table striped bordered onChange={this.handleChange}>
-                            <thead>
-                                <tr>
-                                    <th>{this.props.language1}</th>
-                                    <th>{this.props.language2}</th>
-                                    <th></th>
+                    <Table striped bordered onChange={this.handleChange}>
+                        <thead>
+                            <tr>
+                                <th className="WordColumn">{this.props.language1}</th>
+                                <th className="WordColumn">{this.props.language2}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                            {this.state.wordPairs.map((wordPair, index) => (
+                                <tr key={index}>
+                                    <th className="WordColumn">
+                                        <EditableWord
+                                            id={wordPair.id}
+                                            word={wordPair.word_in_language1}
+                                            wordPair={wordPair}
+                                            languageIndex={0}
+                                            updateWordPairs={this.updateWordPairs}
+                                        />
+                                    </th>
+                                    <th className="WordColumn">
+                                        <EditableWord
+                                            id={wordPair.id}
+                                            word={wordPair.word_in_language2}
+                                            wordPair={wordPair}
+                                            languageIndex={1}
+                                            updateWordPairs={this.updateWordPairs}
+                                        />
+                                    </th>
+                                    <td style={{ width: "50px" }}>
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => this.deleteRow(wordPair.id)}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody id="table">
-                                {this.state.wordPairs.map((wordPair, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <Form.Control
-                                                defaultValue={wordPair.word_in_language1}
-                                            />
-                                        </td>
-                                        <td>
-                                            <Form.Control
-                                                defaultValue={wordPair.word_in_language2}
-                                            />
-                                        </td>
-                                        <td style={{ width: "50px" }}>
-                                            <Button as="button" variant="danger">
-                                                Delete
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                        <Button
-                            as="button"
-                            style={{ float: "left" }}
-                            onClick={this.addRow}
-                        >
-                            Add row
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="success"
-                            style={{
-                                float: "right",
-                                display: this.getSaveDisplay("button"),
-                            }}
-                        >
-                            Save changes
-                        </Button>
-                        <Spinner
-                            animation="border"
-                            role="status"
-                            variant="success"
-                            style={{
-                                float: "right",
-                                display: this.getSaveDisplay("spinner"),
-                            }}
-                        >
-                            <span className="visually-hidden">Saving...</span>
-                        </Spinner>
-                        <Alert
-                            variant="success"
-                            style={{
-                                float: "right",
-                                display: this.getSaveDisplay("alert"),
-                            }}
-                        >
-                            Saved!
-                        </Alert>
-                    </Form>
+                            ))}
+                        </tbody>
+                    </Table>
+                    <Button as="button" style={{ float: "left" }} onClick={this.addRow}>
+                        Add row
+                    </Button>
                 </div>
             );
         }

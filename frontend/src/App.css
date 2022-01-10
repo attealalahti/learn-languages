@@ -30,9 +30,7 @@ header a:hover {
 tbody tr {
     text-align: left;
 }
-td input {
+.Word {
     width: 100%;
-}
-.alert {
-    margin-right: 10px;
+    height: 38px;
 }
