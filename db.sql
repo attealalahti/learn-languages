@@ -53,3 +53,21 @@ BEGIN
         COMMIT;
 END //
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS AddLanguage;
+DELIMITER //
+CREATE PROCEDURE AddLanguage(
+    IN language VARCHAR(100)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+        START TRANSACTION;
+        INSERT INTO languages (language)
+        VALUES (language);
+        SELECT LAST_INSERT_ID();
+        COMMIT;
+END //
+DELIMITER ;
