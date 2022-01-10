@@ -22,7 +22,7 @@ header a:hover {
     text-align: center;
 }
 
-.Container {
+.card {
     min-width: 480px;
     max-width: 50%;
     margin: 10px auto;

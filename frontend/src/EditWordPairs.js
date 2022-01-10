@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import EditableWord from "./EditableWord";
+import Card from "react-bootstrap/Card";
 
 class EditWordPairs extends React.Component {
     state = {
@@ -68,52 +69,60 @@ class EditWordPairs extends React.Component {
             );
         } else {
             return (
-                <div className="Container">
-                    <Table striped bordered onChange={this.handleChange}>
-                        <thead>
-                            <tr>
-                                <th className="WordColumn">{this.props.language1}</th>
-                                <th className="WordColumn">{this.props.language2}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table">
-                            {this.state.wordPairs.map((wordPair, index) => (
-                                <tr key={index}>
-                                    <th className="WordColumn">
-                                        <EditableWord
-                                            id={wordPair.id}
-                                            word={wordPair.word_in_language1}
-                                            wordPair={wordPair}
-                                            languageIndex={0}
-                                            updateWordPairs={this.updateWordPairs}
-                                        />
-                                    </th>
-                                    <th className="WordColumn">
-                                        <EditableWord
-                                            id={wordPair.id}
-                                            word={wordPair.word_in_language2}
-                                            wordPair={wordPair}
-                                            languageIndex={1}
-                                            updateWordPairs={this.updateWordPairs}
-                                        />
-                                    </th>
-                                    <td style={{ width: "50px" }}>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => this.deleteRow(wordPair.id)}
-                                        >
-                                            Delete
-                                        </Button>
-                                    </td>
+                <Card className="Container">
+                    <Card.Body>
+                        <Table striped bordered onChange={this.handleChange}>
+                            <thead>
+                                <tr>
+                                    <th className="WordColumn">{this.props.language1}</th>
+                                    <th className="WordColumn">{this.props.language2}</th>
+                                    <th></th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                    <Button as="button" style={{ float: "left" }} onClick={this.addRow}>
-                        Add row
-                    </Button>
-                </div>
+                            </thead>
+                            <tbody id="table">
+                                {this.state.wordPairs.map((wordPair, index) => (
+                                    <tr key={index}>
+                                        <th className="WordColumn">
+                                            <EditableWord
+                                                id={wordPair.id}
+                                                word={wordPair.word_in_language1}
+                                                wordPair={wordPair}
+                                                languageIndex={0}
+                                                updateWordPairs={this.updateWordPairs}
+                                            />
+                                        </th>
+                                        <th className="WordColumn">
+                                            <EditableWord
+                                                id={wordPair.id}
+                                                word={wordPair.word_in_language2}
+                                                wordPair={wordPair}
+                                                languageIndex={1}
+                                                updateWordPairs={this.updateWordPairs}
+                                            />
+                                        </th>
+                                        <td style={{ width: "50px" }}>
+                                            <Button
+                                                variant="danger"
+                                                onClick={() =>
+                                                    this.deleteRow(wordPair.id)
+                                                }
+                                            >
+                                                Delete
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <Button
+                            as="button"
+                            style={{ float: "left" }}
+                            onClick={this.addRow}
+                        >
+                            Add row
+                        </Button>
+                    </Card.Body>
+                </Card>
             );
         }
     }

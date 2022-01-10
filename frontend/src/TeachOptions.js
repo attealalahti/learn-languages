@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 class TeachOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -44,48 +45,56 @@ class TeachOptions extends React.Component {
             );
         } else {
             return (
-                <div className="Container">
-                    <div>Which words do you want to edit?</div>
-                    <Form onSubmit={this.handleSubmit}>
-                        <Row>
-                            <Col>
-                                <Form.Group id="lang1Group">
-                                    <FloatingLabel label="Language 1">
-                                        <Form.Select id="lang1">
-                                            {this.state.languages.map((lang) => {
-                                                return (
-                                                    <option key={lang.id} value={lang.id}>
-                                                        {lang.language}
-                                                    </option>
-                                                );
-                                            })}
-                                        </Form.Select>
-                                    </FloatingLabel>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id="lang2Group">
-                                    <FloatingLabel label="Language 2">
-                                        <Form.Select id="lang2">
-                                            {this.state.languages.map((lang) => {
-                                                return (
-                                                    <option key={lang.id} value={lang.id}>
-                                                        {lang.language}
-                                                    </option>
-                                                );
-                                            })}
-                                        </Form.Select>
-                                    </FloatingLabel>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Button type="submit">Edit words</Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </div>
+                <Card className="Container">
+                    <Card.Body>
+                        <Card.Text>Which words do you want to edit?</Card.Text>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Row>
+                                <Col>
+                                    <Form.Group id="lang1Group">
+                                        <FloatingLabel label="From">
+                                            <Form.Select id="lang1">
+                                                {this.state.languages.map((lang) => {
+                                                    return (
+                                                        <option
+                                                            key={lang.id}
+                                                            value={lang.id}
+                                                        >
+                                                            {lang.language}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </Form.Select>
+                                        </FloatingLabel>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group id="lang2Group">
+                                        <FloatingLabel label="To">
+                                            <Form.Select id="lang2">
+                                                {this.state.languages.map((lang) => {
+                                                    return (
+                                                        <option
+                                                            key={lang.id}
+                                                            value={lang.id}
+                                                        >
+                                                            {lang.language}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </Form.Select>
+                                        </FloatingLabel>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Button type="submit">Edit words</Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Card.Body>
+                </Card>
             );
         }
     }
