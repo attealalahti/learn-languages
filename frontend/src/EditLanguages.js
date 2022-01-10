@@ -4,8 +4,8 @@ import getUrl from "./getUrl";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
-import EditableWord from "./EditableWord";
 import Card from "react-bootstrap/Card";
+import EditableLanguage from "./EditableLanguage";
 
 class EditLanguages extends React.Component {
     state = {
@@ -62,12 +62,9 @@ class EditLanguages extends React.Component {
                                 {this.state.languages.map((language, index) => (
                                     <tr key={index}>
                                         <th>
-                                            <EditableWord
+                                            <EditableLanguage
                                                 id={language.id}
-                                                word={language.word_in_language1}
-                                                wordPair={language}
-                                                languageIndex={0}
-                                                updateWordPairs={this.updateLanguages}
+                                                word={language.language}
                                             />
                                         </th>
                                         <td style={{ width: "50px" }}>
