@@ -1,6 +1,11 @@
 import React from "react";
 import getUrl from "./getUrl";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class TeachOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -39,32 +44,47 @@ class TeachOptions extends React.Component {
             );
         } else {
             return (
-                <div>
-                    <div>Choose languages to add words to.</div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="lang1">Language 1:</label>
-                        <select id="lang1">
-                            {this.state.languages.map((lang) => {
-                                return (
-                                    <option key={lang.id} value={lang.id}>
-                                        {lang.language}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                        <label htmlFor="lang2">Language 2:</label>
-                        <select id="lang2">
-                            {this.state.languages.map((lang) => {
-                                return (
-                                    <option key={lang.id} value={lang.id}>
-                                        {lang.language}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                        <br />
-                        <input type="submit" value="Confirm" />
-                    </form>
+                <div className="Container">
+                    <div>Which words do you want to edit?</div>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Row>
+                            <Col>
+                                <Form.Group id="lang1Group">
+                                    <FloatingLabel label="Language 1">
+                                        <Form.Select id="lang1">
+                                            {this.state.languages.map((lang) => {
+                                                return (
+                                                    <option key={lang.id} value={lang.id}>
+                                                        {lang.language}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group id="lang2Group">
+                                    <FloatingLabel label="Language 2">
+                                        <Form.Select id="lang2">
+                                            {this.state.languages.map((lang) => {
+                                                return (
+                                                    <option key={lang.id} value={lang.id}>
+                                                        {lang.language}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button type="submit">Edit words</Button>
+                            </Col>
+                        </Row>
+                    </Form>
                 </div>
             );
         }

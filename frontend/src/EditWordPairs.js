@@ -68,7 +68,7 @@ class EditWordPairs extends React.Component {
             );
         } else {
             return (
-                <div className="TableContainer">
+                <div className="Container">
                     <Table striped bordered onChange={this.handleChange}>
                         <thead>
                             <tr>

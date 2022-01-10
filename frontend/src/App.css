@@ -22,10 +22,13 @@ header a:hover {
     text-align: center;
 }
 
-.TableContainer {
+.Container {
     min-width: 480px;
     max-width: 50%;
-    margin: auto;
+    margin: 10px auto;
+}
+.Container .row {
+    margin: 15px;
 }
 tbody tr {
     text-align: left;
