@@ -20,7 +20,6 @@ class EditWordPairs extends React.Component {
                     this.props.language2
                 }`
             );
-            this.wordPairsInDatabase = Array.from(wordsResponse.data);
             this.setState({ loading: false, wordPairs: wordsResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
