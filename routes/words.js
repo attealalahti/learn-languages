@@ -21,6 +21,8 @@ router.get("/", async (req, res) => {
                         ...word,
                         language1: word.language2,
                         language2: word.language1,
+                        language1_id: word.language2_id,
+                        language2_id: word.language1_id,
                         word_in_language1: word.word_in_language2,
                         word_in_language2: word.word_in_language1,
                     });
@@ -51,8 +53,8 @@ router.post("/", async (req, res) => {
         res.status(400).send(validation.errors);
     } else {
         try {
-            await connection.saveWordPair(req.body);
-            res.status(201).send(req.body);
+            let id = await connection.saveWordPair(req.body);
+            res.status(201).send({ ...req.body, id: id });
         } catch (error) {
             res.status(500).send(error);
         }
@@ -113,7 +115,6 @@ router.patch("/", async (req, res) => {
                 res.sendStatus(204);
             }
         } catch (error) {
-            console.log(error);
             res.status(500).send(error);
         }
     }
