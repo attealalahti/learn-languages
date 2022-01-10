@@ -35,6 +35,7 @@ class EditableContent extends React.Component {
                         id="ContentInput"
                         defaultValue={this.state.content}
                         onChange={this.handleChange}
+                        autoComplete="off"
                     />
                 </Form>
             );
