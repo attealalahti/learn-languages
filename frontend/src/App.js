@@ -3,6 +3,7 @@ import LearnPage from "./LearnPage";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import TeachPage from "./TeachPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import TeachWordsPage from "./TeachWordsPage";
 
 function App() {
     return (
@@ -16,6 +17,8 @@ function App() {
                 <Routes>
                     <Route path="/learn" element={<LearnPage />}></Route>
                     <Route path="/teach" element={<TeachPage />}></Route>
+                    <Route path="/teach/words" element={<TeachWordsPage />}></Route>
+                    <Route path="/teach/languages" element={<TeachWordsPage />}></Route>
                 </Routes>
             </div>
         </BrowserRouter>
