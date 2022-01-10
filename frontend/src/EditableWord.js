@@ -55,7 +55,11 @@ class EditableWord extends React.Component {
             );
         } else {
             return (
-                <Button onClick={() => this.setState({ editing: true })} className="Word">
+                <Button
+                    variant="outline-dark"
+                    onClick={() => this.setState({ editing: true })}
+                    className="Word"
+                >
                     {this.state.word}
                 </Button>
             );
