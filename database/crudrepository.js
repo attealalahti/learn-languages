@@ -114,4 +114,18 @@ module.exports = {
                 }
             });
         }),
+    updateLanguage: (language) =>
+        new Promise((resolve, reject) => {
+            pool.query(
+                "UPDATE languages SET language = ? WHERE id = ?",
+                [language.language, language.id],
+                (error, info) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(info);
+                    }
+                }
+            );
+        }),
 };
