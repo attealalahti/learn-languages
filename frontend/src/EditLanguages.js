@@ -11,46 +11,26 @@ class EditLanguages extends React.Component {
     state = {
         loading: true,
         error: false,
-        wordPairs: [],
+        languages: [],
     };
     async componentDidMount() {
         try {
-            let wordsResponse = await axios.get(
-                `${getUrl()}/words?from=${this.props.language1}&to=${
-                    this.props.language2
-                }`
-            );
-            this.wordPairsInDatabase = Array.from(wordsResponse.data);
-            this.setState({ loading: false, wordPairs: wordsResponse.data });
+            let languagesResponse = await axios.get(`${getUrl()}/languages`);
+            this.setState({ loading: false, languages: languagesResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
     }
-    addRow = async () => {
-        let newWordPair = {
-            language1: this.props.language1,
-            language2: this.props.language2,
-            language1_id: this.props.language1Id,
-            language2_id: this.props.language2Id,
-            word_in_language1: "",
-            word_in_language2: "",
-        };
-        let newWordPairResponse = await axios.post(`${getUrl()}/words`, newWordPair);
-        let newWordPairs = [...this.state.wordPairs, newWordPairResponse.data];
-        this.setState({ wordPairs: newWordPairs });
+    addLanguage = async () => {
+        let newLanguage = { language: "" };
+        let newLanguageResponse = await axios.post(`${getUrl()}/languages`, newLanguage);
+        let newLanguages = [...this.state.languages, newLanguageResponse.data];
+        this.setState({ languages: newLanguages });
     };
-    deleteRow = async (id) => {
-        let newWordPairs = this.state.wordPairs.filter((wordPair) => wordPair.id !== id);
-        await axios.delete(`${getUrl()}/words/${id}`);
-        this.setState({ wordPairs: newWordPairs });
-    };
-    updateWordPairs = (updatedWordPair) => {
-        let index = this.state.wordPairs.findIndex(
-            (wordPair) => wordPair.id === updatedWordPair.id
-        );
-        let newWordPairs = Array.from(this.state.wordPairs);
-        newWordPairs.splice(index, 1, updatedWordPair);
-        this.setState({ wordPairs: newWordPairs });
+    deleteLanguage = async (id) => {
+        let newLanguages = this.state.languages.filter((language) => language.id !== id);
+        await axios.delete(`${getUrl()}/languages/${id}`);
+        this.setState({ languages: newLanguages });
     };
     render() {
         if (this.state.loading) {
@@ -69,42 +49,32 @@ class EditLanguages extends React.Component {
             );
         } else {
             return (
-                <Card className="Container">
+                <Card>
                     <Card.Body>
-                        <Table striped bordered onChange={this.handleChange}>
+                        <Table striped bordered>
                             <thead>
                                 <tr>
-                                    <th className="WordColumn">{this.props.language1}</th>
-                                    <th className="WordColumn">{this.props.language2}</th>
+                                    <th>Languages</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody id="table">
-                                {this.state.wordPairs.map((wordPair, index) => (
+                            <tbody>
+                                {this.state.languages.map((language, index) => (
                                     <tr key={index}>
-                                        <th className="WordColumn">
+                                        <th>
                                             <EditableWord
-                                                id={wordPair.id}
-                                                word={wordPair.word_in_language1}
-                                                wordPair={wordPair}
+                                                id={language.id}
+                                                word={language.word_in_language1}
+                                                wordPair={language}
                                                 languageIndex={0}
-                                                updateWordPairs={this.updateWordPairs}
-                                            />
-                                        </th>
-                                        <th className="WordColumn">
-                                            <EditableWord
-                                                id={wordPair.id}
-                                                word={wordPair.word_in_language2}
-                                                wordPair={wordPair}
-                                                languageIndex={1}
-                                                updateWordPairs={this.updateWordPairs}
+                                                updateWordPairs={this.updateLanguages}
                                             />
                                         </th>
                                         <td style={{ width: "50px" }}>
                                             <Button
                                                 variant="danger"
                                                 onClick={() =>
-                                                    this.deleteRow(wordPair.id)
+                                                    this.deleteLanguage(language.id)
                                                 }
                                             >
                                                 Delete
@@ -117,9 +87,9 @@ class EditLanguages extends React.Component {
                         <Button
                             as="button"
                             style={{ float: "left" }}
-                            onClick={this.addRow}
+                            onClick={this.addLanguage}
                         >
-                            Add row
+                            Add language
                         </Button>
                     </Card.Body>
                 </Card>
