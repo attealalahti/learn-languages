@@ -83,8 +83,7 @@ class EditWordPairs extends React.Component {
                                     <tr key={index}>
                                         <th>
                                             <EditableWord
-                                                id={wordPair.id}
-                                                word={wordPair.word_in_language1}
+                                                content={wordPair.word_in_language1}
                                                 wordPair={wordPair}
                                                 languageIndex={0}
                                                 updateWordPairs={this.updateWordPairs}
@@ -92,8 +91,7 @@ class EditWordPairs extends React.Component {
                                         </th>
                                         <th>
                                             <EditableWord
-                                                id={wordPair.id}
-                                                word={wordPair.word_in_language2}
+                                                content={wordPair.word_in_language2}
                                                 wordPair={wordPair}
                                                 languageIndex={1}
                                                 updateWordPairs={this.updateWordPairs}

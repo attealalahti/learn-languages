@@ -3,37 +3,37 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 class EditableContent extends React.Component {
-    state = { editing: false, word: this.props.word };
-    currentInput = this.props.word;
+    state = { editing: false, content: this.props.content };
+    currentInput = this.props.content;
     handleSubmit = async (event) => {
         event.preventDefault();
         await this.props.saveChanges(this.currentInput);
-        this.setState({ editing: false, word: this.currentInput });
+        this.setState({ editing: false, content: this.currentInput });
     };
     handleChange = (event) => {
         this.currentInput = event.target.value;
     };
     componentDidUpdate(previousProps, previousState) {
         if (this.state.editing && !previousState.editing) {
-            let input = document.getElementById("WordInput");
+            let input = document.getElementById("ContentInput");
             input.focus();
             input.addEventListener("blur", (event) => {
-                this.currentInput = this.state.word;
+                this.currentInput = this.state.content;
                 this.setState({ editing: false });
             });
         }
-        if (previousProps.word !== this.props.word) {
-            this.currentInput = this.props.word;
-            this.setState({ word: this.props.word });
+        if (previousProps.content !== this.props.content) {
+            this.currentInput = this.props.content;
+            this.setState({ content: this.props.content });
         }
     }
     render() {
         if (this.state.editing) {
             return (
-                <Form onSubmit={this.handleSubmit} className="Word">
+                <Form onSubmit={this.handleSubmit} className="EditableContent">
                     <Form.Control
-                        id="WordInput"
-                        defaultValue={this.state.word}
+                        id="ContentInput"
+                        defaultValue={this.state.content}
                         onChange={this.handleChange}
                     />
                 </Form>
@@ -43,9 +43,9 @@ class EditableContent extends React.Component {
                 <Button
                     variant="outline-dark"
                     onClick={() => this.setState({ editing: true })}
-                    className="Word"
+                    className="EditableContent"
                 >
-                    {this.state.word}
+                    {this.state.content}
                 </Button>
             );
         }

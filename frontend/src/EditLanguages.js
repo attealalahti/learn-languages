@@ -64,7 +64,7 @@ class EditLanguages extends React.Component {
                                         <th>
                                             <EditableLanguage
                                                 id={language.id}
-                                                word={language.language}
+                                                content={language.language}
                                             />
                                         </th>
                                         <td style={{ width: "50px" }}>
