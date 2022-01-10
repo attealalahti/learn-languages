@@ -26,7 +26,7 @@ module.exports = {
     findWordPairsByLanguages: (language1, language2) =>
         new Promise((resolve, reject) => {
             pool.query(
-                "SELECT w.id, l1.language AS language1, l2.language AS language2, w.word_in_language1, w.word_in_language2 FROM ((word_pairs AS w INNER JOIN languages AS l1 ON w.language1_id = l1.id) INNER JOIN languages AS l2 ON w.language2_id = l2.id) WHERE (l1.language = ? AND l2.language = ?) OR (l1.language = ? AND l2.language = ?) ORDER BY w.id",
+                "SELECT w.id, l1.language AS language1, l1.id AS language1_id, l2.language AS language2, l2.id AS language2_id, w.word_in_language1, w.word_in_language2 FROM ((word_pairs AS w INNER JOIN languages AS l1 ON w.language1_id = l1.id) INNER JOIN languages AS l2 ON w.language2_id = l2.id) WHERE (l1.language = ? AND l2.language = ?) OR (l1.language = ? AND l2.language = ?) ORDER BY w.id",
                 [language1, language2, language2, language1],
                 (error, wordPairs) => {
                     if (error) {
@@ -54,18 +54,18 @@ module.exports = {
     saveWordPair: (wordPair) =>
         new Promise((resolve, reject) => {
             pool.query(
-                "INSERT INTO word_pairs (language1_id, language2_id, word_in_language1, word_in_language2) VALUES (?, ?, ?, ?)",
+                "CALL AddWordPair(?, ?, ?, ?)",
                 [
                     wordPair.language1_id,
                     wordPair.language2_id,
                     wordPair.word_in_language1,
                     wordPair.word_in_language2,
                 ],
-                (error) => {
+                (error, out) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve("Word pair saved.");
+                        resolve(out[0][0]["LAST_INSERT_ID()"]);
                     }
                 }
             );
