@@ -1,7 +1,7 @@
 import React from "react";
 import EditWordPairs from "./EditWordPairs";
-import TeachOptions from "./TeachOptions";
-class TeachPage extends React.Component {
+import TeachWordsOptions from "./TeachWordsOptions";
+class TeachWordsPage extends React.Component {
     state = {
         stage: "options",
         language1Id: NaN,
@@ -20,7 +20,7 @@ class TeachPage extends React.Component {
     };
     render() {
         if (this.state.stage === "options") {
-            return <TeachOptions continue={this.moveToEditing} />;
+            return <TeachWordsOptions continue={this.moveToEditing} />;
         } else if (this.state.stage === "editing") {
             return (
                 <EditWordPairs
@@ -33,4 +33,4 @@ class TeachPage extends React.Component {
         }
     }
 }
-export default TeachPage;
+export default TeachWordsPage;

@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
-class TeachOptions extends React.Component {
+class TeachWordsOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
     componentDidMount = async () => {
         try {
@@ -100,4 +100,4 @@ class TeachOptions extends React.Component {
     }
 }
 
-export default TeachOptions;
+export default TeachWordsOptions;
