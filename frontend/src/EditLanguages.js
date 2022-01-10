@@ -7,7 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import EditableWord from "./EditableWord";
 import Card from "react-bootstrap/Card";
 
-class EditWordPairs extends React.Component {
+class EditLanguages extends React.Component {
     state = {
         loading: true,
         error: false,
@@ -127,4 +127,4 @@ class EditWordPairs extends React.Component {
         }
     }
 }
-export default EditWordPairs;
+export default EditLanguages;
