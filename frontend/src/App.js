@@ -10,7 +10,9 @@ function App() {
     return (
         <BrowserRouter>
             <header>
-                <span>Learn Languages!</span>
+                <Link to="/" className="Home">
+                    Learn Languages!
+                </Link>
                 <Link to="/learn">Learn</Link>
                 <Link to="/teach">Teach</Link>
             </header>
