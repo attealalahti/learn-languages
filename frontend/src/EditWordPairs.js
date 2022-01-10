@@ -111,12 +111,11 @@ class EditWordPairs extends React.Component {
                                 ))}
                             </tbody>
                         </Table>
-                        <Button
-                            as="button"
-                            style={{ float: "left" }}
-                            onClick={this.addRow}
-                        >
+                        <Button style={{ float: "left" }} onClick={this.addRow}>
                             Add row
+                        </Button>
+                        <Button style={{ float: "right" }} onClick={this.props.goBack}>
+                            Back
                         </Button>
                     </Card.Body>
                 </Card>

@@ -28,6 +28,9 @@ class TeachWordsPage extends React.Component {
                     language2Id={this.state.language2Id}
                     language1={this.state.language1}
                     language2={this.state.language2}
+                    goBack={() => {
+                        this.setState({ stage: "options" });
+                    }}
                 />
             );
         }
