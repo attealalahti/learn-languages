@@ -32,3 +32,24 @@ OR
 (l1.language = "English" AND l2.language = "Finnish");
 
 SELECT * FROM languages;
+
+DROP PROCEDURE IF EXISTS AddWordPair;
+DELIMITER //
+CREATE PROCEDURE AddWordPair(
+    IN language1_id INT,
+    IN language2_id INT,
+    IN word_in_language1 VARCHAR(1000),
+    IN word_in_language2 VARCHAR(1000)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+        START TRANSACTION;
+        INSERT INTO word_pairs (language1_id, language2_id, word_in_language1, word_in_language2)
+        VALUES (language1_id, language2_id, word_in_language1, word_in_language2);
+        SELECT LAST_INSERT_ID();
+        COMMIT;
+END //
+DELIMITER ;
