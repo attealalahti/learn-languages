@@ -55,5 +55,17 @@ router.patch("/", async (req, res) => {
         }
     }
 });
+router.delete("/:id([0-9]+)", async (req, res) => {
+    try {
+        let info = await connection.deleteLanguageById(req.params.id);
+        if (info.affectedRows > 0) {
+            res.sendStatus(204);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 module.exports = router;
