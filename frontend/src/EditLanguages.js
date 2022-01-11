@@ -6,7 +6,7 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Card from "react-bootstrap/Card";
 import EditableLanguage from "./EditableLanguage";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 class EditLanguages extends React.Component {
     state = {
@@ -85,9 +85,9 @@ class EditLanguages extends React.Component {
                         <Button style={{ float: "left" }} onClick={this.addLanguage}>
                             Add language
                         </Button>
-                        <Link to="/teach">
+                        <LinkContainer to="/teach">
                             <Button style={{ float: "right" }}>Back</Button>
-                        </Link>
+                        </LinkContainer>
                     </Card.Body>
                 </Card>
             );
