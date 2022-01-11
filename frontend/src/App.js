@@ -6,17 +6,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import TeachWordsPage from "./TeachWordsPage";
 import EditLanguages from "./EditLanguages";
 import HomePage from "./HomePage";
+import NavBar from "react-bootstrap/NavBar";
+import Nav from "react-bootstrap/Nav";
 
 function App() {
     return (
         <BrowserRouter>
-            <header>
-                <Link to="/" className="Home">
-                    Learn Languages!
+            <NavBar bg="primary" variant="dark">
+                <Link to="/">
+                    <NavBar.Brand> Learn Languages!</NavBar.Brand>
                 </Link>
-                <Link to="/learn">Learn</Link>
-                <Link to="/teach">Teach</Link>
-            </header>
+                <Nav>
+                    <Link to="/learn">
+                        <Nav.Link href="/learn">Learn</Nav.Link>
+                    </Link>
+                    <Link to="/teach">
+                        <Nav.Link href="/teach">Teach</Nav.Link>
+                    </Link>
+                </Nav>
+            </NavBar>
             <div className="Content">
                 <Routes>
                     <Route path="/" element={<HomePage />}></Route>

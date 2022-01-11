@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 class HomePage extends React.Component {
     render() {
         return (
-            <Card className="HomePage">
+            <Card>
                 <Card.Body>
                     <Card.Title>Welcome to Learn Languages!</Card.Title>
                     <CardGroup>
