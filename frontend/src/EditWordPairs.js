@@ -7,11 +7,13 @@ import Spinner from "react-bootstrap/Spinner";
 import EditableWord from "./EditableWord";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
+import ConnectionSpinner from "./ConnectionSpinner";
 
 class EditWordPairs extends React.Component {
     state = {
         loading: true,
         error: false,
+        connecting: false,
         wordPairs: [],
     };
     async componentDidMount() {
@@ -27,22 +29,34 @@ class EditWordPairs extends React.Component {
         }
     }
     addRow = async () => {
-        let newWordPair = {
-            language1: this.props.language1,
-            language2: this.props.language2,
-            language1_id: this.props.language1Id,
-            language2_id: this.props.language2Id,
-            word_in_language1: "",
-            word_in_language2: "",
-        };
-        let newWordPairResponse = await axios.post(`${getUrl()}/words`, newWordPair);
-        let newWordPairs = [...this.state.wordPairs, newWordPairResponse.data];
-        this.setState({ wordPairs: newWordPairs });
+        this.setState({ connecting: true });
+        try {
+            let newWordPair = {
+                language1: this.props.language1,
+                language2: this.props.language2,
+                language1_id: this.props.language1Id,
+                language2_id: this.props.language2Id,
+                word_in_language1: "",
+                word_in_language2: "",
+            };
+            let newWordPairResponse = await axios.post(`${getUrl()}/words`, newWordPair);
+            let newWordPairs = [...this.state.wordPairs, newWordPairResponse.data];
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
     };
     deleteRow = async (id) => {
-        let newWordPairs = this.state.wordPairs.filter((wordPair) => wordPair.id !== id);
-        await axios.delete(`${getUrl()}/words/${id}`);
-        this.setState({ wordPairs: newWordPairs });
+        this.setState({ connecting: true });
+        try {
+            let newWordPairs = this.state.wordPairs.filter(
+                (wordPair) => wordPair.id !== id
+            );
+            await axios.delete(`${getUrl()}/words/${id}`);
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
     };
     updateWordPairs = (updatedWordPair) => {
         let index = this.state.wordPairs.findIndex(
@@ -118,6 +132,7 @@ class EditWordPairs extends React.Component {
                         <Button style={{ float: "right" }} onClick={this.props.goBack}>
                             Back
                         </Button>
+                        <ConnectionSpinner connecting={this.state.connecting} />
                     </Card.Body>
                 </Card>
             );
