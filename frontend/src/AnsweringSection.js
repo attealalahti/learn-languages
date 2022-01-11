@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import Spinner from "react-bootstrap/Spinner";
 
 class AnsweringSection extends React.Component {
     state = {
@@ -89,7 +90,11 @@ class AnsweringSection extends React.Component {
     };
     render() {
         if (this.state.loading) {
-            return <div>Loading...</div>;
+            return (
+                <Spinner animation="border" role="status">
+                    <div className="visually-hidden">Loading...</div>
+                </Spinner>
+            );
         } else if (this.state.error) {
             return (
                 <div>
