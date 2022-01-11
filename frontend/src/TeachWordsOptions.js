@@ -88,10 +88,8 @@ class TeachWordsOptions extends React.Component {
                                     <Button type="submit" style={{ float: "left" }}>
                                         Edit words
                                     </Button>
-                                    <LinkContainer to="/teach">
-                                        <Button as="button" style={{ float: "right" }}>
-                                            Back
-                                        </Button>
+                                    <LinkContainer to="/teach" style={{ float: "right" }}>
+                                        <Button as="button">Back</Button>
                                     </LinkContainer>
                                 </Col>
                             </Row>
