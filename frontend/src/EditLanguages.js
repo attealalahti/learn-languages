@@ -84,6 +84,15 @@ class EditLanguages extends React.Component {
                                             <EditableLanguage
                                                 id={language.id}
                                                 content={language.language}
+                                                startConnect={() =>
+                                                    this.setState({ connecting: true })
+                                                }
+                                                stopConnect={() => {
+                                                    this.setState({ connecting: false });
+                                                }}
+                                                error={() =>
+                                                    this.setState({ error: true })
+                                                }
                                             />
                                         </th>
                                         <td style={{ width: "50px" }}>

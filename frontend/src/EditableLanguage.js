@@ -5,8 +5,15 @@ import getUrl from "./getUrl";
 
 class EditableLanguage extends React.Component {
     saveLanguage = async (currentInput) => {
-        let newLanguage = { id: this.props.id, language: currentInput };
-        await axios.patch(`${getUrl()}/languages`, newLanguage);
+        this.props.startConnect();
+        try {
+            let newLanguage = { id: this.props.id, language: currentInput };
+            await axios.patch(`${getUrl()}/languages`, newLanguage);
+            this.props.stopConnect();
+        } catch (error) {
+            this.props.stopConnect();
+            this.props.error();
+        }
     };
     render() {
         return <EditableContent {...this.props} saveChanges={this.saveLanguage} />;
