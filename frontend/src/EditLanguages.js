@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card";
 import EditableLanguage from "./EditableLanguage";
 import { LinkContainer } from "react-router-bootstrap";
 import Alert from "react-bootstrap/Alert";
+import ConnectionSpinner from "./ConnectionSpinner";
 
 class EditLanguages extends React.Component {
     state = {
@@ -50,15 +51,6 @@ class EditLanguages extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
-    getConnectionSpinner() {
-        if (this.state.connecting) {
-            return (
-                <Spinner animation="border" role="status" style={{ float: "right" }}>
-                    <div className="visually-hidden">Connecting...</div>
-                </Spinner>
-            );
-        }
-    }
     render() {
         if (this.state.loading) {
             return (
@@ -114,7 +106,7 @@ class EditLanguages extends React.Component {
                         <LinkContainer to="/teach" style={{ float: "right" }}>
                             <Button>Back</Button>
                         </LinkContainer>
-                        {this.getConnectionSpinner()}
+                        <ConnectionSpinner connecting={this.state.connecting} />
                     </Card.Body>
                 </Card>
             );
