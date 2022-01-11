@@ -13,6 +13,7 @@ class EditLanguages extends React.Component {
     state = {
         loading: true,
         error: false,
+        connecting: false,
         languages: [],
     };
     async componentDidMount() {
@@ -24,16 +25,40 @@ class EditLanguages extends React.Component {
         }
     }
     addLanguage = async () => {
-        let newLanguage = { language: "" };
-        let newLanguageResponse = await axios.post(`${getUrl()}/languages`, newLanguage);
-        let newLanguages = [...this.state.languages, newLanguageResponse.data];
-        this.setState({ languages: newLanguages });
+        this.setState({ connecting: true });
+        try {
+            let newLanguage = { language: "" };
+            let newLanguageResponse = await axios.post(
+                `${getUrl()}/languages`,
+                newLanguage
+            );
+            let newLanguages = [...this.state.languages, newLanguageResponse.data];
+            this.setState({ languages: newLanguages, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
     };
     deleteLanguage = async (id) => {
-        let newLanguages = this.state.languages.filter((language) => language.id !== id);
-        await axios.delete(`${getUrl()}/languages/${id}`);
-        this.setState({ languages: newLanguages });
+        this.setState({ connecting: true });
+        try {
+            let newLanguages = this.state.languages.filter(
+                (language) => language.id !== id
+            );
+            await axios.delete(`${getUrl()}/languages/${id}`);
+            this.setState({ languages: newLanguages, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
     };
+    getConnectionSpinner() {
+        if (this.state.connecting) {
+            return (
+                <Spinner animation="border" role="status" style={{ float: "right" }}>
+                    <div className="visually-hidden">Connecting...</div>
+                </Spinner>
+            );
+        }
+    }
     render() {
         if (this.state.loading) {
             return (
@@ -89,6 +114,7 @@ class EditLanguages extends React.Component {
                         <LinkContainer to="/teach" style={{ float: "right" }}>
                             <Button>Back</Button>
                         </LinkContainer>
+                        {this.getConnectionSpinner()}
                     </Card.Body>
                 </Card>
             );
