@@ -9,9 +9,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
 class LearnOptions extends React.Component {
-    state = { loading: true, error: false, languages: undefined };
+    state = { loading: true, error: false, languages: undefined, showTooltip: false };
     componentDidMount = async () => {
         try {
             let languagesResponse = await axios.get(`${getUrl()}/languages`);
@@ -29,6 +30,8 @@ class LearnOptions extends React.Component {
                 document.getElementById("from").value,
                 document.getElementById("to").value
             );
+        } else {
+            this.setState({ showTooltip: true });
         }
     };
     render() {
@@ -86,7 +89,13 @@ class LearnOptions extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Button type="submit">Confirm</Button>
+                                    <Button type="submit" id="ConfirmButton">
+                                        Confirm
+                                    </Button>
+                                    <LanguageSelectTooltip
+                                        show={this.state.showTooltip}
+                                        targetId="ConfirmButton"
+                                    />
                                 </Col>
                             </Row>
                         </Form>
