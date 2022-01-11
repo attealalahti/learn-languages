@@ -58,7 +58,8 @@ class EditWordPairs extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
-    updateWordPairs = (updatedWordPair) => {
+    updateWordPairs = async (updatedWordPair) => {
+        await axios.patch(`${getUrl()}/words`, updatedWordPair);
         let index = this.state.wordPairs.findIndex(
             (wordPair) => wordPair.id === updatedWordPair.id
         );
