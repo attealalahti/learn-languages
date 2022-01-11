@@ -10,9 +10,10 @@ import Card from "react-bootstrap/Card";
 import { LinkContainer } from "react-router-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
 class TeachWordsOptions extends React.Component {
-    state = { loading: true, error: false, languages: undefined };
+    state = { loading: true, error: false, languages: undefined, showTooltip: false };
     componentDidMount = async () => {
         try {
             let languagesResponse = await axios.get(`${getUrl()}/languages`);
@@ -33,6 +34,8 @@ class TeachWordsOptions extends React.Component {
                 (lang) => lang.id === language2Id
             ).language;
             this.props.continue(language1Id, language2Id, language1, language2);
+        } else {
+            this.setState({ showTooltip: true });
         }
     };
     render() {
@@ -91,9 +94,17 @@ class TeachWordsOptions extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Button type="submit" style={{ float: "left" }}>
+                                    <Button
+                                        type="submit"
+                                        style={{ float: "left" }}
+                                        id="EditWordsButton"
+                                    >
                                         Edit words
                                     </Button>
+                                    <LanguageSelectTooltip
+                                        show={this.state.showTooltip}
+                                        targetId="EditWordsButton"
+                                    />
                                     <LinkContainer to="/teach" style={{ float: "right" }}>
                                         <Button as="button">Back</Button>
                                     </LinkContainer>
