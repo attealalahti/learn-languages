@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import CardGroup from "react-bootstrap/CardGroup";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 class HomePage extends React.Component {
     render() {
@@ -16,9 +16,9 @@ class HomePage extends React.Component {
                                 <Card.Text>
                                     Study words to improve in your chosen languages.
                                 </Card.Text>
-                                <Link to="/learn">
+                                <LinkContainer to="/learn">
                                     <Button size="lg">Learn</Button>
-                                </Link>
+                                </LinkContainer>
                             </Card.Body>
                         </Card>
                         <Card>
@@ -27,9 +27,9 @@ class HomePage extends React.Component {
                                     Add words and languages to the database for others to
                                     study.
                                 </Card.Text>
-                                <Link to="/teach">
+                                <LinkContainer to="/teach">
                                     <Button size="lg">Teach</Button>
-                                </Link>
+                                </LinkContainer>
                             </Card.Body>
                         </Card>
                     </CardGroup>
