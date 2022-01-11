@@ -15,7 +15,7 @@ class AnsweringSection extends React.Component {
     state = {
         loading: true,
         error: false,
-        words: undefined,
+        words: [],
         currentWordIndex: 0,
         wordsAnswered: 0,
         correctWords: 0,
@@ -30,10 +30,20 @@ class AnsweringSection extends React.Component {
                     this.props.languageTo
                 }`
             );
-            this.setState({ loading: false, words: wordsResponse.data });
+            this.setState({ loading: false, words: this.shuffle(wordsResponse.data) });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
+    }
+    shuffle(array) {
+        let newArray = Array.from(array);
+        for (let i = newArray.length; i > 0; i--) {
+            let r = Math.floor(Math.random() * i);
+            let chosenWord = newArray[r];
+            newArray[r] = newArray[i - 1];
+            newArray[i - 1] = chosenWord;
+        }
+        return newArray;
     }
     componentDidUpdate(previousProps, previousState) {
         // When coming from the feedback stage, focus text input
@@ -196,6 +206,7 @@ class AnsweringSection extends React.Component {
                                             currentWordIndex: 0,
                                             wordsAnswered: 0,
                                             correctWords: 0,
+                                            words: this.shuffle(this.state.words),
                                         })
                                     }
                                 >
