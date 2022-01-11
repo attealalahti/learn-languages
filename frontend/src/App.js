@@ -5,6 +5,7 @@ import TeachPage from "./TeachPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TeachWordsPage from "./TeachWordsPage";
 import EditLanguages from "./EditLanguages";
+import HomePage from "./HomePage";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
             </header>
             <div className="Content">
                 <Routes>
+                    <Route path="/" element={<HomePage />}></Route>
                     <Route path="/learn" element={<LearnPage />}></Route>
                     <Route path="/teach" element={<TeachPage />}></Route>
                     <Route path="/teach/words" element={<TeachWordsPage />}></Route>
