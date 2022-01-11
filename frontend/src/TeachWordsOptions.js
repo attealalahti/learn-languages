@@ -46,28 +46,23 @@ class TeachWordsOptions extends React.Component {
             );
         } else {
             return (
-                <Card className="Container">
+                <Card>
                     <Card.Body>
                         <Card.Text>Which words do you want to edit?</Card.Text>
                         <Form onSubmit={this.handleSubmit}>
                             <Row>
                                 <Col>
-                                    <Form.Group id="lang1Group">
-                                        <FloatingLabel label="From">
-                                            <Form.Select id="lang1">
-                                                {this.state.languages.map((lang) => {
-                                                    return (
-                                                        <option
-                                                            key={lang.id}
-                                                            value={lang.id}
-                                                        >
-                                                            {lang.language}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </Form.Select>
-                                        </FloatingLabel>
-                                    </Form.Group>
+                                    <FloatingLabel label="From">
+                                        <Form.Select id="lang1">
+                                            {this.state.languages.map((lang) => {
+                                                return (
+                                                    <option key={lang.id} value={lang.id}>
+                                                        {lang.language}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FloatingLabel>
                                 </Col>
                                 <Col>
                                     <Form.Group id="lang2Group">
