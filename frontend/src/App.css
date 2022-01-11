@@ -27,6 +27,10 @@ header a:hover {
     max-width: 50%;
     margin: 10px auto;
 }
+.HomePage {
+    max-width: 80%;
+}
+
 .Container .row {
     margin: 15px;
 }
