@@ -1,14 +1,15 @@
 import React from "react";
+import Card from "react-bootstrap/Card";
 
 class Feedback extends React.Component {
     render() {
         if (this.props.answerCorrect) {
-            return <div>Correct!</div>;
+            return <Card.Title>Correct!</Card.Title>;
         } else {
             return (
-                <div>
+                <Card.Title>
                     Incorrect. The correct answer was <b>{this.props.correctWord}</b>.
-                </div>
+                </Card.Title>
             );
         }
     }
