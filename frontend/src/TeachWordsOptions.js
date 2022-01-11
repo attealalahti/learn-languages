@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { LinkContainer } from "react-router-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 class TeachWordsOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -43,11 +44,11 @@ class TeachWordsOptions extends React.Component {
             );
         } else if (this.state.error) {
             return (
-                <div>
+                <Alert variant="danger">
                     Error
                     <br />
-                    Failed to load page content
-                </div>
+                    Database connection failed
+                </Alert>
             );
         } else {
             return (
