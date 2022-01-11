@@ -1,6 +1,6 @@
 import "./App.css";
 import LearnPage from "./LearnPage";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TeachPage from "./TeachPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TeachWordsPage from "./TeachWordsPage";
@@ -8,21 +8,22 @@ import EditLanguages from "./EditLanguages";
 import HomePage from "./HomePage";
 import NavBar from "react-bootstrap/NavBar";
 import Nav from "react-bootstrap/Nav";
+import { LinkContainer } from "react-router-bootstrap";
 
 function App() {
     return (
         <BrowserRouter>
             <NavBar bg="primary" variant="dark">
-                <Link to="/">
+                <LinkContainer to="/">
                     <NavBar.Brand> Learn Languages!</NavBar.Brand>
-                </Link>
+                </LinkContainer>
                 <Nav>
-                    <Link to="/learn">
-                        <Nav.Link href="/learn">Learn</Nav.Link>
-                    </Link>
-                    <Link to="/teach">
-                        <Nav.Link href="/teach">Teach</Nav.Link>
-                    </Link>
+                    <LinkContainer to="/learn">
+                        <Nav.Link>Learn</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/teach">
+                        <Nav.Link>Teach</Nav.Link>
+                    </LinkContainer>
                 </Nav>
             </NavBar>
             <div className="Content">
