@@ -7,6 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Card from "react-bootstrap/Card";
 import EditableLanguage from "./EditableLanguage";
 import { LinkContainer } from "react-router-bootstrap";
+import Alert from "react-bootstrap/Alert";
 
 class EditLanguages extends React.Component {
     state = {
@@ -42,11 +43,11 @@ class EditLanguages extends React.Component {
             );
         } else if (this.state.error) {
             return (
-                <div>
+                <Alert variant="danger">
                     Error
                     <br />
-                    Failed to load page content
-                </div>
+                    Database connection failed
+                </Alert>
             );
         } else {
             return (
