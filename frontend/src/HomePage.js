@@ -24,7 +24,8 @@ class HomePage extends React.Component {
                         <Card>
                             <Card.Body>
                                 <Card.Text>
-                                    Add words to the database for others to study.
+                                    Add words and languages to the database for others to
+                                    study.
                                 </Card.Text>
                                 <Link to="/teach">
                                     <Button size="lg">Teach</Button>
