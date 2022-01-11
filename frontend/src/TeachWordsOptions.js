@@ -7,7 +7,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 class TeachWordsOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -88,11 +88,11 @@ class TeachWordsOptions extends React.Component {
                                     <Button type="submit" style={{ float: "left" }}>
                                         Edit words
                                     </Button>
-                                    <Link to="/teach">
+                                    <LinkContainer to="/teach">
                                         <Button as="button" style={{ float: "right" }}>
                                             Back
                                         </Button>
-                                    </Link>
+                                    </LinkContainer>
                                 </Col>
                             </Row>
                         </Form>
