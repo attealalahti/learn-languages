@@ -7,7 +7,8 @@
 .Content {
     text-align: center;
 }
-.card {
+.card,
+.alert {
     width: 65%;
     margin: 10px auto;
 }

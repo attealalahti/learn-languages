@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 class LearnOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -39,11 +40,11 @@ class LearnOptions extends React.Component {
             );
         } else if (this.state.error) {
             return (
-                <div>
+                <Alert variant="danger">
                     Error
                     <br />
                     Failed to load page content
-                </div>
+                </Alert>
             );
         } else {
             return (
