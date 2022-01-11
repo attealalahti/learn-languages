@@ -2,6 +2,12 @@ import React from "react";
 import getUrl from "./getUrl";
 import axios from "axios";
 import Feedback from "./Feedback";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 class AnsweringSection extends React.Component {
     state = {
         loading: true,
@@ -85,48 +91,77 @@ class AnsweringSection extends React.Component {
             );
         } else if (this.state.showFeedback) {
             return (
-                <div>
-                    <Feedback
-                        answerCorrect={this.state.answerCorrect}
-                        correctWord={
-                            this.state.words[this.state.currentWordIndex]
-                                .word_in_language2
-                        }
-                    />
-                    <button id="NextWordButton" onClick={this.nextWord}>
-                        Next
-                    </button>
-                </div>
+                <Card>
+                    <Card.Body>
+                        <Row>
+                            <Col>
+                                <Feedback
+                                    answerCorrect={this.state.answerCorrect}
+                                    correctWord={
+                                        this.state.words[this.state.currentWordIndex]
+                                            .word_in_language2
+                                    }
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button id="NextWordButton" onClick={this.nextWord}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
             );
         } else if (this.state.wordsAnswered !== this.state.words.length) {
             return (
-                <div>
-                    <div>
-                        {this.state.words[this.state.currentWordIndex].word_in_language1}
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <input
-                            id="LearnPageTextInput"
-                            onChange={this.handleTextInputChange}
-                            type="text"
-                            placeholder={`Type in ${
-                                this.state.words[this.state.currentWordIndex].language2
-                            }...`}
-                            autoComplete="off"
-                        />
-                        <input type="submit" value="Submit" />
-                    </form>
-                    <div>
-                        Words answered: {this.state.wordsAnswered}/
-                        {this.state.words.length}
-                    </div>
-                </div>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>
+                            {
+                                this.state.words[this.state.currentWordIndex]
+                                    .word_in_language1
+                            }
+                        </Card.Title>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Row>
+                                <Col>
+                                    <Form.Control
+                                        id="LearnPageTextInput"
+                                        onChange={this.handleTextInputChange}
+                                        type="text"
+                                        placeholder={`Type in ${
+                                            this.state.words[this.state.currentWordIndex]
+                                                .language2
+                                        }...`}
+                                        autoComplete="off"
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Button type="submit">Submit</Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                        <div>
+                            Words answered: {this.state.wordsAnswered}/
+                            {this.state.words.length}
+                        </div>
+                    </Card.Body>
+                </Card>
             );
         } else {
             return (
-                <div>
-                    You got {this.state.correctWords}/{this.state.words.length} correct!
-                </div>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>
+                            You got {this.state.correctWords}/{this.state.words.length}{" "}
+                            correct!
+                        </Card.Title>
+                    </Card.Body>
+                </Card>
             );
         }
     }
