@@ -1,6 +1,12 @@
 import React from "react";
 import getUrl from "./getUrl";
 import axios from "axios";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class LearnOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -36,25 +42,50 @@ class LearnOptions extends React.Component {
             );
         } else {
             return (
-                <div>
-                    <div>Choose languages to study.</div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="from">From:</label>
-                        <select id="from">
-                            {this.state.languages.map((lang) => {
-                                return <option key={lang.id}>{lang.language}</option>;
-                            })}
-                        </select>
-                        <label htmlFor="to">To:</label>
-                        <select id="to">
-                            {this.state.languages.map((lang) => {
-                                return <option key={lang.id}>{lang.language}</option>;
-                            })}
-                        </select>
-                        <br />
-                        <input type="submit" value="Confirm" />
-                    </form>
-                </div>
+                <Card>
+                    <Card.Body>
+                        <Row>
+                            <Col>
+                                <Card.Title>Choose languages to study.</Card.Title>
+                            </Col>
+                        </Row>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Row>
+                                <Col>
+                                    <FloatingLabel label="From">
+                                        <Form.Select id="from">
+                                            {this.state.languages.map((lang) => {
+                                                return (
+                                                    <option key={lang.id}>
+                                                        {lang.language}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </Col>
+                                <Col>
+                                    <FloatingLabel label="To">
+                                        <Form.Select id="to">
+                                            {this.state.languages.map((lang) => {
+                                                return (
+                                                    <option key={lang.id}>
+                                                        {lang.language}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Button type="submit">Confirm</Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Card.Body>
+                </Card>
             );
         }
     }
