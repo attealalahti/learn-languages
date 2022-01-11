@@ -59,13 +59,18 @@ class EditWordPairs extends React.Component {
         }
     };
     updateWordPairs = async (updatedWordPair) => {
-        await axios.patch(`${getUrl()}/words`, updatedWordPair);
-        let index = this.state.wordPairs.findIndex(
-            (wordPair) => wordPair.id === updatedWordPair.id
-        );
-        let newWordPairs = Array.from(this.state.wordPairs);
-        newWordPairs.splice(index, 1, updatedWordPair);
-        this.setState({ wordPairs: newWordPairs });
+        this.setState({ connecting: true });
+        try {
+            await axios.patch(`${getUrl()}/words`, updatedWordPair);
+            let index = this.state.wordPairs.findIndex(
+                (wordPair) => wordPair.id === updatedWordPair.id
+            );
+            let newWordPairs = Array.from(this.state.wordPairs);
+            newWordPairs.splice(index, 1, updatedWordPair);
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
     };
     render() {
         if (this.state.loading) {
