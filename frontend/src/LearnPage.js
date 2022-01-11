@@ -18,6 +18,7 @@ class LearnPage extends React.Component {
                 <AnsweringSection
                     languageFrom={this.state.languageFrom}
                     languageTo={this.state.languageTo}
+                    goBack={() => this.setState({ stage: "options" })}
                 />
             );
         }

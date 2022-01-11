@@ -151,7 +151,15 @@ class AnsweringSection extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Button type="submit">Submit</Button>
+                                    <Button type="submit" style={{ float: "left" }}>
+                                        Submit
+                                    </Button>
+                                    <Button
+                                        onClick={this.props.goBack}
+                                        style={{ float: "right" }}
+                                    >
+                                        Select languages
+                                    </Button>
                                 </Col>
                             </Row>
                         </Form>
@@ -173,6 +181,26 @@ class AnsweringSection extends React.Component {
                         </Row>
                         <Row>
                             <Col>{this.getProgressBar()}</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button
+                                    onClick={() =>
+                                        this.setState({
+                                            currentWordIndex: 0,
+                                            wordsAnswered: 0,
+                                            correctWords: 0,
+                                        })
+                                    }
+                                >
+                                    Try again
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button onClick={this.props.goBack}>
+                                    Select languages
+                                </Button>
+                            </Col>
                         </Row>
                     </Card.Body>
                 </Card>
