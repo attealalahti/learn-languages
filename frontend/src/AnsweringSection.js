@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 class AnsweringSection extends React.Component {
     state = {
@@ -78,6 +79,14 @@ class AnsweringSection extends React.Component {
             currentWordIndex: this.state.currentWordIndex + 1,
         });
     };
+    getProgressBar = () => {
+        return (
+            <ProgressBar
+                now={(this.state.wordsAnswered / this.state.words.length) * 100}
+                animated
+            />
+        );
+    };
     render() {
         if (this.state.loading) {
             return <div>Loading...</div>;
@@ -111,6 +120,7 @@ class AnsweringSection extends React.Component {
                                 </Button>
                             </Col>
                         </Row>
+                        {this.getProgressBar()}
                     </Card.Body>
                 </Card>
             );
@@ -145,10 +155,7 @@ class AnsweringSection extends React.Component {
                                 </Col>
                             </Row>
                         </Form>
-                        <div>
-                            Words answered: {this.state.wordsAnswered}/
-                            {this.state.words.length}
-                        </div>
+                        {this.getProgressBar()}
                     </Card.Body>
                 </Card>
             );
@@ -156,10 +163,17 @@ class AnsweringSection extends React.Component {
             return (
                 <Card>
                     <Card.Body>
-                        <Card.Title>
-                            You got {this.state.correctWords}/{this.state.words.length}{" "}
-                            correct!
-                        </Card.Title>
+                        <Row>
+                            <Col>
+                                <Card.Title>
+                                    You got {this.state.correctWords}/
+                                    {this.state.words.length} correct!
+                                </Card.Title>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>{this.getProgressBar()}</Col>
+                        </Row>
                     </Card.Body>
                 </Card>
             );
