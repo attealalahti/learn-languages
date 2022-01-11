@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { LinkContainer } from "react-router-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 
 class TeachWordsOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -35,7 +36,11 @@ class TeachWordsOptions extends React.Component {
     };
     render() {
         if (this.state.loading) {
-            return <div>Loading...</div>;
+            return (
+                <Spinner animation="border" role="status">
+                    <div className="visually-hidden">Loading...</div>
+                </Spinner>
+            );
         } else if (this.state.error) {
             return (
                 <div>
