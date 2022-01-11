@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 
 class AnsweringSection extends React.Component {
     state = {
@@ -97,11 +98,11 @@ class AnsweringSection extends React.Component {
             );
         } else if (this.state.error) {
             return (
-                <div>
+                <Alert variant="danger">
                     Error
                     <br />
                     Failed to load page content
-                </div>
+                </Alert>
             );
         } else if (this.state.showFeedback) {
             return (
