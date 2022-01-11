@@ -85,8 +85,8 @@ class EditLanguages extends React.Component {
                         <Button style={{ float: "left" }} onClick={this.addLanguage}>
                             Add language
                         </Button>
-                        <LinkContainer to="/teach">
-                            <Button style={{ float: "right" }}>Back</Button>
+                        <LinkContainer to="/teach" style={{ float: "right" }}>
+                            <Button>Back</Button>
                         </LinkContainer>
                     </Card.Body>
                 </Card>
