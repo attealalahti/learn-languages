@@ -7,6 +7,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 
 class LearnOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined };
@@ -31,7 +32,11 @@ class LearnOptions extends React.Component {
     };
     render() {
         if (this.state.loading) {
-            return <div>Loading...</div>;
+            return (
+                <Spinner animation="border" role="status">
+                    <div className="visually-hidden">Loading...</div>
+                </Spinner>
+            );
         } else if (this.state.error) {
             return (
                 <div>
