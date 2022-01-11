@@ -101,7 +101,7 @@ class AnsweringSection extends React.Component {
                 <Alert variant="danger">
                     Error
                     <br />
-                    Failed to load page content
+                    Database connection failed
                 </Alert>
             );
         } else if (this.state.showFeedback) {
