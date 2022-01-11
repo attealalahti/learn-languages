@@ -6,6 +6,7 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import EditableWord from "./EditableWord";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 
 class EditWordPairs extends React.Component {
     state = {
@@ -60,11 +61,11 @@ class EditWordPairs extends React.Component {
             );
         } else if (this.state.error) {
             return (
-                <div>
+                <Alert variant="danger">
                     Error
                     <br />
-                    Failed to load page content
-                </div>
+                    Database connection failed
+                </Alert>
             );
         } else {
             return (
