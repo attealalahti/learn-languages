@@ -183,6 +183,12 @@ module.exports.updateLanguage = (language) =>
             }
         );
     });
+/**
+ * Attempts to delete a language with a specified id from the database.
+ * @async
+ * @param {Number} id - Id of language to delete.
+ * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
+ */
 module.exports.deleteLanguageById = (id) =>
     new Promise((resolve, reject) => {
         pool.query("DELETE FROM languages WHERE id = ?", [id], (error, info) => {
