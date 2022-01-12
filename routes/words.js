@@ -8,12 +8,12 @@ const validator = new Validator();
  * @module
  */
 /**
- * Tries to get all word pairs from the database to send them to the requester.
+ * Attempts to get all word pairs from the database to send them to the requester.
  * All sent word pairs' languages will be in the same order.
  * If both from and to parameters are defined in the request, only word pairs from the specified languages will be returned.
  * @author Atte Ala-Lahti
- * @example GET /words?from=finnish&to=english
  * @name GET request
+ * @example GET /words?from=finnish&to=english
  * @function
  * @param {String} [from] - Which language the words are supposed to be translated from.
  * @param {String} [to] - Which language the words are supposed to be translated to.
@@ -66,7 +66,7 @@ const postSchema = {
     required: ["language1_id", "language2_id", "word_in_language1", "word_in_language2"],
 };
 /**
- * Tries save a word pair to the database.
+ * Attempts to save a word pair to the database.
  * Sends back an error if the given word pair object does not have the right data in the right fields.
  * @author Atte Ala-Lahti
  * @name POST request
@@ -87,6 +87,16 @@ router.post("/", async (req, res) => {
         }
     }
 });
+/**
+ * Attempts to delete a word pair with a given id from the database.
+ * Sends back a 404 error if nothing was deleted.
+ * @author Atte Ala-Lahti
+ * @name DELETE request
+ * @example DELETE /words/1
+ * @function
+ * @param {Number} id - Id of the word pair to be deleted.
+ * @returns {status} 204 status, or an error.
+ */
 router.delete("/:id([0-9]+)", async (req, res) => {
     try {
         let info = await connection.deleteWordPairById(req.params.id);
