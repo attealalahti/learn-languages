@@ -3,7 +3,22 @@ const connection = require("../database/crudrepository.js");
 const router = express.Router();
 const Validator = require("jsonschema").Validator;
 const validator = new Validator();
-
+/**
+ * Processes requests to /words.
+ * @module
+ */
+/**
+ * Tries to get all word pairs from the database to send them to the requester.
+ * All sent word pairs' languages will be in the same order.
+ * If both from and to parameters are defined in the request, only word pairs from the specified languages will be returned.
+ * @author Atte Ala-Lahti
+ * @example GET /words?from=finnish&to=english
+ * @name GET request
+ * @function
+ * @param {String} [from] - Which language the words are supposed to be translated from.
+ * @param {String} [to] - Which language the words are supposed to be translated to.
+ * @returns {Array<Object>} Wanted word pairs with languages in the same order, or an error.
+ */
 router.get("/", async (req, res) => {
     try {
         if (req.query.to && req.query.from) {
@@ -119,5 +134,7 @@ router.patch("/", async (req, res) => {
         }
     }
 });
-
+/**
+ * Router with stuff in it.
+ */
 module.exports = router;
