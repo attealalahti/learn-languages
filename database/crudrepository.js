@@ -57,6 +57,7 @@ module.exports.findWordPairsByLanguages = (language1, language2) =>
     });
 /**
  * Attempts to get a word pair with a specified id from the database.
+ * @async
  * @param {Number} id - Id of the word pair to get.
  * @returns {Promise<Object>} Word pair with the specified id, or an error from the database.
  */
@@ -70,6 +71,12 @@ module.exports.findWordPairById = (id) =>
             }
         });
     });
+/**
+ * Attempts to save a word pair to the database.
+ * @async
+ * @param {Object} wordPair - Word pair to save.
+ * @returns {Promise<Number>} The id of the saved word pair, or an error from the database.
+ */
 module.exports.saveWordPair = (wordPair) =>
     new Promise((resolve, reject) => {
         pool.query(
