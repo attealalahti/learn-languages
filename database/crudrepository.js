@@ -19,7 +19,7 @@ const pool = mysql.createPool(config);
 /**
  * Attempts to get all word pairs and the names of their languages from the database.
  * @async
- * @returns {Promise<Object>} All word pairs with names of the languages, or an error from the database.
+ * @returns {Promise<Array>} All word pairs with names of the languages, or an error from the database.
  */
 module.exports.findAllWordPairs = () =>
     new Promise((resolve, reject) => {
@@ -37,7 +37,9 @@ module.exports.findAllWordPairs = () =>
 /**
  * Attempts to get all word pairs of two specified languages and the names of the languages from the database.
  * @async
- * @returns {Promise<Object>} All word pairs of the specified languages with names of the languages, or an error.
+ * @param {String} language1 - Language one of the words has to be in.
+ * @param {String} language2 - Language the other one of the words has to be in.
+ * @returns {Promise<Array>} All word pairs of the specified languages with names of the languages, or an error from the database.
  */
 module.exports.findWordPairsByLanguages = (language1, language2) =>
     new Promise((resolve, reject) => {
@@ -53,13 +55,18 @@ module.exports.findWordPairsByLanguages = (language1, language2) =>
             }
         );
     });
+/**
+ * Attempts to get a word pair with a specified id from the database.
+ * @param {Number} id - Id of the word pair to get.
+ * @returns {Promise<Object>} Word pair with the specified id, or an error from the database.
+ */
 module.exports.findWordPairById = (id) =>
     new Promise((resolve, reject) => {
-        pool.query("SELECT * FROM word_pairs WHERE id = ?", [id], (error, wordPair) => {
+        pool.query("SELECT * FROM word_pairs WHERE id = ?", [id], (error, wordPairs) => {
             if (error) {
                 reject(error);
             } else {
-                resolve(wordPair);
+                resolve(wordPairs[0]);
             }
         });
     });
