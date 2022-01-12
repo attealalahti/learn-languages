@@ -163,6 +163,12 @@ module.exports.saveLanguage = (language) =>
             }
         });
     });
+/**
+ * Attempts to update the name of a language in the database.
+ * @async
+ * @param {Object} language - Language with new a new name to update to the database.
+ * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
+ */
 module.exports.updateLanguage = (language) =>
     new Promise((resolve, reject) => {
         pool.query(
