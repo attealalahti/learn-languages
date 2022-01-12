@@ -98,6 +98,7 @@ module.exports.saveWordPair = (wordPair) =>
     });
 /**
  * Attempts to delete a word pair with a specified id from the database.
+ * @async
  * @param {Number} id - Id of the word pair to delete.
  * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
  */
@@ -111,6 +112,12 @@ module.exports.deleteWordPairById = (id) =>
             }
         });
     });
+/**
+ * Attempts to update a word pair's translations in the database.
+ * @async
+ * @param {Object} wordPair - Word pair to with new values to update to the database.
+ * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
+ */
 module.exports.updateWordPair = (wordPair) =>
     new Promise((resolve, reject) => {
         pool.query(
