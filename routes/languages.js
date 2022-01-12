@@ -53,6 +53,9 @@ router.post("/", async (req, res) => {
         }
     }
 });
+/**
+ * Schema for validating PATCH requests.
+ */
 const patchSchema = {
     type: "object",
     properties: {
@@ -61,6 +64,15 @@ const patchSchema = {
     },
     required: ["id", "language"],
 };
+/**
+ * Attempts to update a language in the database.
+ * Sends back an error if the given language object does not have the right kind of data in the right fields.
+ * @author Atte Ala-Lahti
+ * @name PATCH request
+ * @function
+ * @param {Object} req.body - Language to be updated.
+ * @returns {status} 200 if something changed, 204 if nothing changed, or an error.
+ */
 router.patch("/", async (req, res) => {
     const validation = validator.validate(req.body, patchSchema);
     if (validation.errors.length > 0) {
@@ -69,7 +81,7 @@ router.patch("/", async (req, res) => {
         try {
             let info = await connection.updateLanguage(req.body);
             if (info.changedRows > 0) {
-                res.status(201).send(req.body);
+                res.sendStatus(200);
             } else {
                 res.sendStatus(204);
             }
