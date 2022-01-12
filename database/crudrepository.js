@@ -1,5 +1,12 @@
 const mysql = require("mysql");
 require("dotenv").config();
+/**
+ * Contains all functions to access and modify the database.
+ * @module
+ */
+/**
+ * Configuration for connecting to the mysql database.
+ */
 const config = {
     host: "mydb.tamk.fi",
     user: process.env.user,
@@ -9,6 +16,11 @@ const config = {
 };
 const pool = mysql.createPool(config);
 
+/**
+ * Attempts to get all word pairs and the names of their languages from the database.
+ * @async
+ * @returns {Promise<Object>} All word pairs with names of the languages, or an error.
+ */
 module.exports.findAllWordPairs = () =>
     new Promise((resolve, reject) => {
         pool.query(
@@ -22,10 +34,6 @@ module.exports.findAllWordPairs = () =>
             }
         );
     });
-/**
- * Testing functionality
- * @returns {Promise<Object>} returning from the deep dark past
- */
 module.exports.findWordPairsByLanguages = (language1, language2) =>
     new Promise((resolve, reject) => {
         pool.query(
