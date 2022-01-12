@@ -5,6 +5,7 @@ const Validator = require("jsonschema").Validator;
 const validator = new Validator();
 /**
  * Processes requests to /words.
+ * @author Atte Ala-Lahti
  * @module
  */
 /**
@@ -67,7 +68,7 @@ const postSchema = {
 };
 /**
  * Attempts to save a word pair to the database.
- * Sends back an error if the given word pair object does not have the right data in the right fields.
+ * Sends back an error if the given word pair object does not have the right kind of data in the right fields.
  * @author Atte Ala-Lahti
  * @name POST request
  * @function
@@ -109,6 +110,9 @@ router.delete("/:id([0-9]+)", async (req, res) => {
         res.status(500).send(error);
     }
 });
+/**
+ * Schema for validating PATCH requests.
+ */
 const patchSchema = {
     type: "object",
     properties: {
@@ -126,6 +130,16 @@ const patchSchema = {
         "word_in_language2",
     ],
 };
+/**
+ * Attempts to update a word pair in the database.
+ * Sends back an error if the given word pair object does not have the right kind of data in the right fields.
+ * Will only update the translations of the word, not which languages the words are in.
+ * @author Atte Ala-Lahti
+ * @name PATCH request
+ * @function
+ * @param {Object} req.body - Word pair to be updated.
+ * @returns {status} 200 if something changed, 204 if nothing changed, or an error.
+ */
 router.patch("/", async (req, res) => {
     const validation = validator.validate(req.body, patchSchema);
     if (validation.errors.length > 0) {
@@ -147,7 +161,7 @@ router.patch("/", async (req, res) => {
             }
             let info = await connection.updateWordPair(newWordPair);
             if (info.changedRows > 0) {
-                res.status(201).send(newWordPair);
+                res.sendStatus(200);
             } else {
                 res.sendStatus(204);
             }
@@ -156,7 +170,4 @@ router.patch("/", async (req, res) => {
         }
     }
 });
-/**
- * Router with stuff in it.
- */
 module.exports = router;
