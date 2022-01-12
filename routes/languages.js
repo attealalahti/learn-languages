@@ -90,6 +90,16 @@ router.patch("/", async (req, res) => {
         }
     }
 });
+/**
+ * Attempts to delete a language with a given id from the database.
+ * Sends back a 404 error if nothing was deleted.
+ * @author Atte Ala-Lahti
+ * @name DELETE request
+ * @example DELETE /languages/1
+ * @function
+ * @param {Number} id - Id of the language to be deleted.
+ * @returns {status} 204 status, or an error.
+ */
 router.delete("/:id([0-9]+)", async (req, res) => {
     try {
         let info = await connection.deleteLanguageById(req.params.id);
