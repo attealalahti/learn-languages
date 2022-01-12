@@ -147,6 +147,12 @@ module.exports.findAllLanguages = () =>
             }
         });
     });
+/**
+ * Attempts to save a language to the database.
+ * @async
+ * @param {String} language - Language to save.
+ * @returns {Promise<Number>} The id of the saved language, or an error from the database.
+ */
 module.exports.saveLanguage = (language) =>
     new Promise((resolve, reject) => {
         pool.query("CALL AddLanguage(?)", [language], (error, out) => {
