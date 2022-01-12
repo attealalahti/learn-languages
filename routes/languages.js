@@ -3,7 +3,18 @@ const connection = require("../database/crudrepository.js");
 const router = express.Router();
 const Validator = require("jsonschema").Validator;
 const validator = new Validator();
-
+/**
+ * Processes requests to /languages.
+ * @author Atte Ala-Lahti
+ * @module
+ */
+/**
+ * Attempts to get all languages from the database to send them to the requester.
+ * @author Atte Ala-Lahti
+ * @name GET request
+ * @function
+ * @returns {Array<Object>} All languages in the database.
+ */
 router.get("/", async (req, res) => {
     try {
         let allLanguages = await connection.findAllLanguages();
