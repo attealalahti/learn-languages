@@ -132,6 +132,11 @@ module.exports.updateWordPair = (wordPair) =>
             }
         );
     });
+/**
+ * Attempts to get all languages from the database.
+ * @async
+ * @returns {Promise<Array>} All languages in the database, or an error from the database.
+ */
 module.exports.findAllLanguages = () =>
     new Promise((resolve, reject) => {
         pool.query("SELECT * FROM languages", (error, languages) => {
