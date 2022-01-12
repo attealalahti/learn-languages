@@ -23,11 +23,23 @@ router.get("/", async (req, res) => {
         res.status(500).send(error);
     }
 });
+/**
+ * Schema for validating POST requests.
+ */
 const postSchema = {
     type: "object",
     properties: { language: { type: "string" } },
     required: ["language"],
 };
+/**
+ * Attempts to save a language to the database.
+ * Sends back an error if the given language object does not have the right kind of data in the right fields.
+ * @author Atte Ala-Lahti
+ * @name POST request
+ * @function
+ * @param {Object} req.body - Language to be saved.
+ * @returns {Object} The saved language with id from the database added, or an error.
+ */
 router.post("/", async (req, res) => {
     const validation = validator.validate(req.body, postSchema);
     if (validation.errors.length > 0) {
