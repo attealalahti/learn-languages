@@ -19,7 +19,7 @@ const pool = mysql.createPool(config);
 /**
  * Attempts to get all word pairs and the names of their languages from the database.
  * @async
- * @returns {Promise<Object>} All word pairs with names of the languages, or an error.
+ * @returns {Promise<Object>} All word pairs with names of the languages, or an error from the database.
  */
 module.exports.findAllWordPairs = () =>
     new Promise((resolve, reject) => {
@@ -34,6 +34,11 @@ module.exports.findAllWordPairs = () =>
             }
         );
     });
+/**
+ * Attempts to get all word pairs of two specified languages and the names of the languages from the database.
+ * @async
+ * @returns {Promise<Object>} All word pairs of the specified languages with names of the languages, or an error.
+ */
 module.exports.findWordPairsByLanguages = (language1, language2) =>
     new Promise((resolve, reject) => {
         pool.query(
