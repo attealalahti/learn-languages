@@ -146,8 +146,10 @@ router.patch("/", async (req, res) => {
         res.status(400).send(validation.errors);
     } else {
         try {
+            // First get the word pair as it is in the database to find out which way round the languages are.
             let currentWordPair = (await connection.findWordPairById(req.body.id))[0];
             let newWordPair;
+            // Flip the languages of the given word pair around if they are not in the same order as they are in the database.
             if (req.body.language1_id === currentWordPair.language1_id) {
                 newWordPair = req.body;
             } else {
