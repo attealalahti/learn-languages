@@ -52,6 +52,9 @@ router.get("/", async (req, res) => {
         res.status(500).send(error);
     }
 });
+/**
+ * Schema for validating POST requests.
+ */
 const postSchema = {
     type: "object",
     properties: {
@@ -62,6 +65,15 @@ const postSchema = {
     },
     required: ["language1_id", "language2_id", "word_in_language1", "word_in_language2"],
 };
+/**
+ * Tries save a word pair to the database.
+ * Sends back an error if the given word pair object does not have the right data in the right fields.
+ * @author Atte Ala-Lahti
+ * @name POST request
+ * @function
+ * @param {Object} req.body - Word pair to be saved.
+ * @returns {Object} The saved word pair with id from the database added, or an error.
+ */
 router.post("/", async (req, res) => {
     const validation = validator.validate(req.body, postSchema);
     if (validation.errors.length > 0) {
