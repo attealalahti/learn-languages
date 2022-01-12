@@ -96,6 +96,11 @@ module.exports.saveWordPair = (wordPair) =>
             }
         );
     });
+/**
+ * Attempts to delete a word pair with a specified id from the database.
+ * @param {Number} id - Id of the word pair to delete.
+ * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
+ */
 module.exports.deleteWordPairById = (id) =>
     new Promise((resolve, reject) => {
         pool.query("DELETE FROM word_pairs WHERE id = ?", [id], (error, info) => {
