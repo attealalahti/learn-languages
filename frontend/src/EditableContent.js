@@ -66,6 +66,11 @@ class EditableContent extends React.Component {
             this.setState({ content: this.props.content });
         }
     }
+    /**
+     * When editing, renders a text input.
+     * When not editing, renders a button.
+     * @returns {React.Component} A button or a text input.
+     */
     render() {
         if (this.state.editing) {
             return (
