@@ -107,6 +107,7 @@ class AnsweringSection extends React.Component {
     /**
      * When a translation to a word is submitted, it is checked if it is correct and state is updated accordingly.
      * Then moves on to the feedback stage.
+     * @function
      * @param {object} event - The form submit event.
      */
     handleSubmit = (event) => {
@@ -132,17 +133,27 @@ class AnsweringSection extends React.Component {
     };
     /**
      * When the value in the text input element changes, the [currentInput]{@link AnsweringSection#currentInput} variable is updated.
+     * @function
      * @param {object} event - The text input change event.
      */
     handleTextInputChange = (event) => {
         this.currentInput = event.target.value;
     };
+    /**
+     * Moves from the feedback stage to answering the next word's translation when the "Next" button is clicked.
+     * @function
+     */
     nextWord = () => {
         this.setState({
             showFeedback: false,
             currentWordIndex: this.state.currentWordIndex + 1,
         });
     };
+    /**
+     * Returns a progress bar component that displays how many words have been answered.
+     * @function
+     * @returns {React.Component} Animated progress bar.
+     */
     getProgressBar = () => {
         return (
             <ProgressBar
