@@ -19,7 +19,7 @@ import getUrl from "./getUrl";
  */
 
 /**
- * A component that renders and passes all props to a {@link EditableContent} component and
+ * A component that renders and passes all props to an {@link EditableContent} component and
  * contains the {@link saveChangesCallback} for it to save changes to a language.
  * @property {number} props.id - The id of the language to be patched.
  * @property {startConnectCallback} props.startConnect - Callback called before trying to connect to the database.
@@ -29,6 +29,11 @@ import getUrl from "./getUrl";
  * @extends React.Component
  */
 class EditableLanguage extends React.Component {
+    /**
+     * Attempts to update a language in the database with a new name.
+     * @function
+     * @param {string} newContent - New name for the language.
+     */
     saveLanguage = async (newContent) => {
         this.props.startConnect();
         try {
@@ -40,6 +45,10 @@ class EditableLanguage extends React.Component {
             this.props.error();
         }
     };
+    /**
+     * Renders an {@link EditableContent} component and passes all props to it.
+     * @returns {EditableContent} An EditableContent component.
+     */
     render() {
         return <EditableContent {...this.props} saveChanges={this.saveLanguage} />;
     }
