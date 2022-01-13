@@ -81,6 +81,13 @@ class AnsweringSection extends React.Component {
         }
         return newArray;
     }
+    /**
+     * When the component updates, focus on a particular element.
+     * When coming to the answering stage, focus on the input element.
+     * When coming to the feedback stage, focus on the "Next" button.
+     * @param {object} previousProps - Props from the previous state.
+     * @param {object} previousState - Previous state.
+     */
     componentDidUpdate(previousProps, previousState) {
         // When coming from the feedback stage, focus text input
         if (previousState.showFeedback && !this.state.showFeedback) {
@@ -97,6 +104,11 @@ class AnsweringSection extends React.Component {
             }
         }
     }
+    /**
+     * When a translation to a word is submitted, it is checked if it is correct and state is updated accordingly.
+     * Then moves on to the feedback stage.
+     * @param {object} event - The form submit event.
+     */
     handleSubmit = (event) => {
         event.preventDefault();
         let newCorrectWords = this.state.correctWords;
