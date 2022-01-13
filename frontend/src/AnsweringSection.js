@@ -11,6 +11,14 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 
+/**
+ * A component that prompts the user to translate words and checks if they got them correct.
+ * @property {String} props.languageFrom - Language to translate from.
+ * @property {String} props.languageTo - Language to translate into.
+ * @property {function} props.goBack - Function that sets the state of the app to go back to the language selection stage.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class AnsweringSection extends React.Component {
     state = {
         loading: true,
