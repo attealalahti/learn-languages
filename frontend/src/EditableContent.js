@@ -17,8 +17,21 @@ import Button from "react-bootstrap/Button";
  * @extends React.Component
  */
 class EditableContent extends React.Component {
+    /**
+     * @property {boolean} editing - Whether or not component is in editing mode to render text input.
+     * @property {string} content - Current button text and input default value.
+     */
     state = { editing: false, content: this.props.content };
+    /**
+     * Current text in the input element.
+     * @type {string}
+     */
     currentInput = this.props.content;
+    /**
+     * When an edit to the content is submitted, the new version is saved to the database and editing mode is exited.
+     * @function
+     * @param {object} event - The form submit event.
+     */
     handleSubmit = async (event) => {
         event.preventDefault();
         await this.props.saveChanges(this.currentInput);
