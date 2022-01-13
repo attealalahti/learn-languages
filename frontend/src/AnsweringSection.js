@@ -65,6 +65,11 @@ class AnsweringSection extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    /**
+     * Randomizes the order of the items in an array.
+     * @param {Array<any>} array - Array to shuffle.
+     * @returns {Array<any>} The shuffled array.
+     */
     shuffle(array) {
         let newArray = Array.from(array);
         for (let i = newArray.length; i > 0; i--) {
