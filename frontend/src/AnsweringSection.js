@@ -13,8 +13,8 @@ import Alert from "react-bootstrap/Alert";
 
 /**
  * A component that prompts the user to translate words and checks if they got them correct.
- * @property {String} props.languageFrom - Language to translate from.
- * @property {String} props.languageTo - Language to translate into.
+ * @property {string} props.languageFrom - Language to translate from.
+ * @property {string} props.languageTo - Language to translate into.
  * @property {function} props.goBack - Function that sets the state of the app to go back to the language selection stage.
  * @author Atte Ala-Lahti
  * @extends React.Component
@@ -29,6 +29,7 @@ class AnsweringSection extends React.Component {
      * @property {number} correctWords - Amount of correct translations given.
      * @property {boolean} showFeedback - Whether or not to show a view that tells how well the last word was translated.
      * @property {boolean} answerCorrect - Whether or not the last translation was correct.
+     * @author Atte Ala-Lahti
      */
     state = {
         loading: true,

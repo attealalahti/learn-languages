@@ -16,8 +16,8 @@ const validator = new Validator();
  * @name GET request
  * @example GET /words?from=finnish&to=english
  * @function
- * @param {String} [from] - Which language the words are supposed to be translated from.
- * @param {String} [to] - Which language the words are supposed to be translated to.
+ * @param {string} [from] - Which language the words are supposed to be translated from.
+ * @param {string} [to] - Which language the words are supposed to be translated to.
  * @returns {Array<Object>} Wanted word pairs with languages in the same order, or an error.
  */
 router.get("/", async (req, res) => {
@@ -72,8 +72,8 @@ const postSchema = {
  * @author Atte Ala-Lahti
  * @name POST request
  * @function
- * @param {Object} req.body - Word pair to be saved.
- * @returns {Object} The saved word pair with id from the database added, or an error.
+ * @param {object} req.body - Word pair to be saved.
+ * @returns {object} The saved word pair with id from the database added, or an error.
  */
 router.post("/", async (req, res) => {
     const validation = validator.validate(req.body, postSchema);
@@ -95,7 +95,7 @@ router.post("/", async (req, res) => {
  * @name DELETE request
  * @example DELETE /words/1
  * @function
- * @param {Number} id - Id of the word pair to be deleted.
+ * @param {number} id - Id of the word pair to be deleted.
  * @returns {status} 204 status, or an error.
  */
 router.delete("/:id([0-9]+)", async (req, res) => {
@@ -137,7 +137,7 @@ const patchSchema = {
  * @author Atte Ala-Lahti
  * @name PATCH request
  * @function
- * @param {Object} req.body - Word pair to be updated.
+ * @param {object} req.body - Word pair to be updated.
  * @returns {status} 200 if something changed, 204 if nothing changed, or an error.
  */
 router.patch("/", async (req, res) => {

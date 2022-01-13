@@ -37,8 +37,8 @@ module.exports.findAllWordPairs = () =>
 /**
  * Attempts to get all word pairs of two specified languages and the names of the languages from the database.
  * @async
- * @param {String} language1 - Language one of the words has to be in.
- * @param {String} language2 - Language the other one of the words has to be in.
+ * @param {string} language1 - Language one of the words has to be in.
+ * @param {string} language2 - Language the other one of the words has to be in.
  * @returns {Promise<Array>} All word pairs of the specified languages with names of the languages, or an error from the database.
  */
 module.exports.findWordPairsByLanguages = (language1, language2) =>
@@ -58,7 +58,7 @@ module.exports.findWordPairsByLanguages = (language1, language2) =>
 /**
  * Attempts to get a word pair with a specified id from the database.
  * @async
- * @param {Number} id - Id of the word pair to get.
+ * @param {number} id - Id of the word pair to get.
  * @returns {Promise<Object>} Word pair with the specified id, or an error from the database.
  */
 module.exports.findWordPairById = (id) =>
@@ -74,8 +74,8 @@ module.exports.findWordPairById = (id) =>
 /**
  * Attempts to save a word pair to the database.
  * @async
- * @param {Object} wordPair - Word pair to save.
- * @returns {Promise<Number>} The id of the saved word pair, or an error from the database.
+ * @param {object} wordPair - Word pair to save.
+ * @returns {Promise<number>} The id of the saved word pair, or an error from the database.
  */
 module.exports.saveWordPair = (wordPair) =>
     new Promise((resolve, reject) => {
@@ -99,7 +99,7 @@ module.exports.saveWordPair = (wordPair) =>
 /**
  * Attempts to delete a word pair with a specified id from the database.
  * @async
- * @param {Number} id - Id of the word pair to delete.
+ * @param {number} id - Id of the word pair to delete.
  * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
  */
 module.exports.deleteWordPairById = (id) =>
@@ -115,7 +115,7 @@ module.exports.deleteWordPairById = (id) =>
 /**
  * Attempts to update a word pair's translations in the database.
  * @async
- * @param {Object} wordPair - Word pair to with new values to update to the database.
+ * @param {object} wordPair - Word pair to with new values to update to the database.
  * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
  */
 module.exports.updateWordPair = (wordPair) =>
@@ -150,7 +150,7 @@ module.exports.findAllLanguages = () =>
 /**
  * Attempts to save a language to the database.
  * @async
- * @param {String} language - Language to save.
+ * @param {string} language - Language to save.
  * @returns {Promise<Number>} The id of the saved language, or an error from the database.
  */
 module.exports.saveLanguage = (language) =>
@@ -166,7 +166,7 @@ module.exports.saveLanguage = (language) =>
 /**
  * Attempts to update the name of a language in the database.
  * @async
- * @param {Object} language - Language with new a new name to update to the database.
+ * @param {object} language - Language with new a new name to update to the database.
  * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
  */
 module.exports.updateLanguage = (language) =>
@@ -186,7 +186,7 @@ module.exports.updateLanguage = (language) =>
 /**
  * Attempts to delete a language with a specified id from the database.
  * @async
- * @param {Number} id - Id of language to delete.
+ * @param {number} id - Id of language to delete.
  * @returns {Promise<Object>} Info about what changed in the database, or an error from the database.
  */
 module.exports.deleteLanguageById = (id) =>

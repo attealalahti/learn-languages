@@ -37,8 +37,8 @@ const postSchema = {
  * @author Atte Ala-Lahti
  * @name POST request
  * @function
- * @param {Object} req.body - Language to be saved.
- * @returns {Object} The saved language with id from the database added, or an error.
+ * @param {object} req.body - Language to be saved.
+ * @returns {object} The saved language with id from the database added, or an error.
  */
 router.post("/", async (req, res) => {
     const validation = validator.validate(req.body, postSchema);
@@ -70,7 +70,7 @@ const patchSchema = {
  * @author Atte Ala-Lahti
  * @name PATCH request
  * @function
- * @param {Object} req.body - Language to be updated.
+ * @param {object} req.body - Language to be updated.
  * @returns {status} 200 if something changed, 204 if nothing changed, or an error.
  */
 router.patch("/", async (req, res) => {
@@ -97,7 +97,7 @@ router.patch("/", async (req, res) => {
  * @name DELETE request
  * @example DELETE /languages/1
  * @function
- * @param {Number} id - Id of the language to be deleted.
+ * @param {number} id - Id of the language to be deleted.
  * @returns {status} 204 status, or an error.
  */
 router.delete("/:id([0-9]+)", async (req, res) => {
