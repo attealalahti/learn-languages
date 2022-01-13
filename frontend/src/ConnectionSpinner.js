@@ -9,6 +9,11 @@ import PropTypes from "prop-types";
  * @extends React.Component
  */
 class ConnectionSpinner extends React.Component {
+    /**
+     * Returns a style to hide the component if it is not supposed to be active.
+     * @function
+     * @returns {string} Undefined when active, "none" when not active.
+     */
     getActive = () => {
         if (!this.props.connecting) {
             return "none";
