@@ -42,7 +42,7 @@ class AnsweringSection extends React.Component {
         answerCorrect: false,
     };
     /**
-     * Current text in the input field.
+     * Current text in the input element.
      * @type {string}
      * @author Atte Ala-Lahti
      */
@@ -130,6 +130,10 @@ class AnsweringSection extends React.Component {
             answerCorrect: answerCorrect,
         });
     };
+    /**
+     * When the value in the text input element changes, the [currentInput]{@link AnsweringSection#currentInput} variable is updated.
+     * @param {object} event - The text input change event.
+     */
     handleTextInputChange = (event) => {
         this.currentInput = event.target.value;
     };
