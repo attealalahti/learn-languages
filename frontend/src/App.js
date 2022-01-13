@@ -11,7 +11,21 @@ import NavBar from "react-bootstrap/NavBar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
+/**
+ * The main component that renders the whole single page application.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class App extends React.Component {
+    /**
+     * Renders pages of the app depending on the url.
+     * /: Home page with links to Learn and Teach pages.
+     * /learn: Page for studying languages.
+     * /teach: Page for editing the language and word database.
+     * /teach/words: Edit words in the database.
+     * /teach/languages: Edit languages in the database.
+     * @returns A page of the application.
+     */
     render() {
         return (
             <BrowserRouter>
