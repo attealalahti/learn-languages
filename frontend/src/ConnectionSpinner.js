@@ -1,6 +1,13 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
+import PropTypes from "prop-types";
 
+/**
+ * A component that renders a spinning loading icon when attempting to connect to the database.
+ * @property {boolean} props.connecting - Whether or not the icon should be visible.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class ConnectionSpinner extends React.Component {
     getActive = () => {
         if (!this.props.connecting) {
@@ -19,5 +26,8 @@ class ConnectionSpinner extends React.Component {
         );
     }
 }
+ConnectionSpinner.propTypes = {
+    connecting: PropTypes.string.isRequired,
+};
 
 export default ConnectionSpinner;
