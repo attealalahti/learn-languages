@@ -10,23 +10,28 @@ import LearnOptions from "./LearnOptions";
  * @extends React.Component
  */
 class LearnPage extends React.Component {
-    state = { stage: "options", languageFrom: undefined, languageTo: undefined };
+    /**
+     * @property {boolean} props.showOptions - Whether to render the options or the answering section.
+     * @property {string} props.languageFrom - Language to translate words from.
+     * @property {string} props.languageTo - Language to translate words into.
+     */
+    state = { showOptions: true, languageFrom: undefined, languageTo: undefined };
     moveToAnsweringSection = (languageFrom, languageTo) => {
         this.setState({
-            stage: "answering",
+            showOptions: false,
             languageFrom: languageFrom,
             languageTo: languageTo,
         });
     };
     render() {
-        if (this.state.stage === "options") {
+        if (this.state.showOptions) {
             return <LearnOptions continue={this.moveToAnsweringSection} />;
-        } else if (this.state.stage === "answering") {
+        } else {
             return (
                 <AnsweringSection
                     languageFrom={this.state.languageFrom}
                     languageTo={this.state.languageTo}
-                    goBack={() => this.setState({ stage: "options" })}
+                    goBack={() => this.setState({ showOptions: true })}
                 />
             );
         }
