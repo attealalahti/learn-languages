@@ -12,7 +12,6 @@ const validator = new Validator();
  * Attempts to get all word pairs from the database to send them to the requester.
  * All sent word pairs' languages will be in the same order.
  * If both from and to parameters are defined in the request, only word pairs from the specified languages will be returned.
- * @author Atte Ala-Lahti
  * @name GET request
  * @example GET /words?from=finnish&to=english
  * @function
@@ -69,7 +68,6 @@ const postSchema = {
 /**
  * Attempts to save a word pair to the database.
  * Sends back an error if the given word pair object does not have the right kind of data in the right fields.
- * @author Atte Ala-Lahti
  * @name POST request
  * @function
  * @param {object} req.body - Word pair to be saved.
@@ -91,7 +89,6 @@ router.post("/", async (req, res) => {
 /**
  * Attempts to delete a word pair with a given id from the database.
  * Sends back a 404 error if nothing was deleted.
- * @author Atte Ala-Lahti
  * @name DELETE request
  * @example DELETE /words/1
  * @function
@@ -134,7 +131,6 @@ const patchSchema = {
  * Attempts to update a word pair in the database.
  * Sends back an error if the given word pair object does not have the right kind of data in the right fields.
  * Will only update the translations of the word, not which languages the words are in.
- * @author Atte Ala-Lahti
  * @name PATCH request
  * @function
  * @param {object} req.body - Word pair to be updated.

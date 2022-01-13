@@ -10,7 +10,6 @@ const validator = new Validator();
  */
 /**
  * Attempts to get all languages from the database to send them to the requester.
- * @author Atte Ala-Lahti
  * @name GET request
  * @function
  * @returns {Array<Object>} All languages in the database.
@@ -34,7 +33,6 @@ const postSchema = {
 /**
  * Attempts to save a language to the database.
  * Sends back an error if the given language object does not have the right kind of data in the right fields.
- * @author Atte Ala-Lahti
  * @name POST request
  * @function
  * @param {object} req.body - Language to be saved.
@@ -67,7 +65,6 @@ const patchSchema = {
 /**
  * Attempts to update a language in the database.
  * Sends back an error if the given language object does not have the right kind of data in the right fields.
- * @author Atte Ala-Lahti
  * @name PATCH request
  * @function
  * @param {object} req.body - Language to be updated.
@@ -93,7 +90,6 @@ router.patch("/", async (req, res) => {
 /**
  * Attempts to delete a language with a given id from the database.
  * Sends back a 404 error if nothing was deleted.
- * @author Atte Ala-Lahti
  * @name DELETE request
  * @example DELETE /languages/1
  * @function

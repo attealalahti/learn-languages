@@ -29,7 +29,6 @@ class AnsweringSection extends React.Component {
      * @property {number} correctWords - Amount of correct translations given.
      * @property {boolean} showFeedback - Whether or not to show a view that tells how well the last word was translated.
      * @property {boolean} answerCorrect - Whether or not the last translation was correct.
-     * @author Atte Ala-Lahti
      */
     state = {
         loading: true,
@@ -44,7 +43,6 @@ class AnsweringSection extends React.Component {
     /**
      * Current text in the input element.
      * @type {string}
-     * @author Atte Ala-Lahti
      */
     currentInput = "";
     /**

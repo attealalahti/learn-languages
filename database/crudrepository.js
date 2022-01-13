@@ -2,6 +2,7 @@ const mysql = require("mysql");
 require("dotenv").config();
 /**
  * Contains all functions to access and modify the database.
+ * @author Atte Ala-Lahti
  * @module
  */
 /**
