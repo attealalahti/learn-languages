@@ -20,6 +20,16 @@ import Alert from "react-bootstrap/Alert";
  * @extends React.Component
  */
 class AnsweringSection extends React.Component {
+    /**
+     * @property {boolean} loading - Whether or not data is being fetched from the database.
+     * @property {boolean} error - Whether or not there was an error with communicating with the database.
+     * @property {Array<Object>} words - Word pairs to translate.
+     * @property {number} currentWordIndex - Index of the current word pair in the words array.
+     * @property {number} wordsAnswered - Amount of translation answers given.
+     * @property {number} correctWords - Amount of correct translations given.
+     * @property {boolean} showFeedback - Whether or not to show a view that tells how well the last word was translated.
+     * @property {boolean} answerCorrect - Whether or not the last translation was correct.
+     */
     state = {
         loading: true,
         error: false,
