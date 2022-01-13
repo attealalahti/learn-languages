@@ -1,6 +1,14 @@
 import React from "react";
 import AnsweringSection from "./AnsweringSection";
 import LearnOptions from "./LearnOptions";
+
+/**
+ * A component that renders the Learn page of the app.
+ * First prompts the user to select languages to study,
+ * then quizzes them on words in those languages.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class LearnPage extends React.Component {
     state = { stage: "options", languageFrom: undefined, languageTo: undefined };
     moveToAnsweringSection = (languageFrom, languageTo) => {
