@@ -41,7 +41,18 @@ class AnsweringSection extends React.Component {
         showFeedback: false,
         answerCorrect: false,
     };
+    /**
+     * Current text in the input field.
+     * @type {string}
+     * @author Atte Ala-Lahti
+     */
     currentInput = "";
+    /**
+     * When the component first loads, it tries to fetch all words from the languages
+     * translations are supposed to be made from and to, from the database.
+     * If this fails, sets the error state.
+     * @author Atte Ala-Lahti
+     */
     async componentDidMount() {
         try {
             let wordsResponse = await axios.get(
