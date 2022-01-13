@@ -37,9 +37,21 @@ class EditableContent extends React.Component {
         await this.props.saveChanges(this.currentInput);
         this.setState({ editing: false, content: this.currentInput });
     };
+    /**
+     * When the value in the text input element changes, the [currentInput]{@link EditableContent#currentInput} variable is updated.
+     * @function
+     * @param {object} event - The text input change event.
+     */
     handleChange = (event) => {
         this.currentInput = event.target.value;
     };
+    /**
+     * When the component updates and the content prop changes, update state about it.
+     * After coming into editing mode, focus on the input element.
+     * When its focus is lost, exit editing mode.
+     * @param {object} previousProps - Props from the previous state.
+     * @param {object} previousState - Previous state.
+     */
     componentDidUpdate(previousProps, previousState) {
         if (this.state.editing && !previousState.editing) {
             let input = document.getElementById("ContentInput");
