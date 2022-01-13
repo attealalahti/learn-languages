@@ -48,8 +48,9 @@ class AnsweringSection extends React.Component {
      */
     currentInput = "";
     /**
-     * When the component first loads, it tries to fetch all words from the languages
-     * translations are supposed to be made from and to, from the database.
+     * When the component first loads, it tries to fetch from the database
+     * all words from the languages translations are supposed to be made from and to.
+     * Word pairs are then shuffled.
      * If this fails, sets the error state.
      * @author Atte Ala-Lahti
      */
