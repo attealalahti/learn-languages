@@ -16,6 +16,13 @@ class LearnPage extends React.Component {
      * @property {string} props.languageTo - Language to translate words into.
      */
     state = { showOptions: true, languageFrom: undefined, languageTo: undefined };
+    /**
+     * Move from the language select to the answering section.
+     * Set the languages to study.
+     * @function
+     * @param {string} languageFrom - Language to translate words from.
+     * @param {string} languageTo - Language to translate words into.
+     */
     moveToAnsweringSection = (languageFrom, languageTo) => {
         this.setState({
             showOptions: false,
@@ -23,6 +30,12 @@ class LearnPage extends React.Component {
             languageTo: languageTo,
         });
     };
+    /**
+     * Renders the Learn page:
+     * First prompts the user to select languages to study,
+     * then quizzes them on words in those languages.
+     * @returns {React.Component} A view in the Learn page.
+     */
     render() {
         if (this.state.showOptions) {
             return <LearnOptions continue={this.moveToAnsweringSection} />;
