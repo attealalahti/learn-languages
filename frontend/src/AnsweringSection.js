@@ -162,6 +162,15 @@ class AnsweringSection extends React.Component {
             />
         );
     };
+    /**
+     * Renders a view in the answering section:
+     * a loading animation when loading,
+     * an error message when an error has occurred,
+     * input for entering a translation to a word,
+     * feedback of the translation
+     * or the final results of all answers.
+     * @returns {React.Component} A view in the answering section.
+     */
     render() {
         if (this.state.loading) {
             return (
