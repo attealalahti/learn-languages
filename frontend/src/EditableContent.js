@@ -1,7 +1,18 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+/**
+ * Callback for saving changes of the content of the component to the database.
+ * @callback saveChangesCallback
+ * @param {string} newContent - New version of the content.
+ */
 
+/**
+ * A component that renders a button that when clicked becomes a text input.
+ * The text on the button changes to what is typed into the input.
+ * @property {string} props.content - Button text and input default value.
+ * @property {saveChangesCallback} props.saveChanges - Callback for saving changes of the content to the database.
+ */
 class EditableContent extends React.Component {
     state = { editing: false, content: this.props.content };
     currentInput = this.props.content;
