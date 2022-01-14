@@ -36,14 +36,21 @@ class LearnOptions extends React.Component {
      * When the component first loads, tries to fetch all languages from the database.
      * If this fails, sets the error state.
      */
-    componentDidMount = async () => {
+    async componentDidMount() {
         try {
             let languagesResponse = await axios.get(`${getUrl()}/languages`);
             this.setState({ loading: false, languages: languagesResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
-    };
+    }
+    /**
+     * When the languages are selected and they are different from each other,
+     * Move on to studying the words of those languages by passing the language information on.
+     * If the selected languages are the same, show a tooltip to prompt the user to select different languages.
+     * @function
+     * @param {object} event - The form submit event.
+     */
     handleSubmit = (event) => {
         event.preventDefault();
         if (
@@ -57,6 +64,13 @@ class LearnOptions extends React.Component {
             this.setState({ showTooltip: true });
         }
     };
+    /**
+     * Renders a view in the language selection section:
+     * a loading animation when loading,
+     * an error message when an error has occurred
+     * or options to select two languages to study words from.
+     * @returns {React.Component} A view in the language selection section.
+     */
     render() {
         if (this.state.loading) {
             return (
