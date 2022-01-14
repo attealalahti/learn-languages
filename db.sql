@@ -1,3 +1,4 @@
+/* SQL statements to create the database */
 CREATE TABLE languages (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     language VARCHAR(100) NOT NULL

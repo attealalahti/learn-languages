@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: database/crudrepository.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: database/crudrepository.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const mysql = require("mysql");
+require("dotenv").config();
+/**
+ * Contains all functions to access and modify the database.
+ * @author Atte Ala-Lahti
+ * @module
+ */
+/**
+ * Configuration for connecting to the mysql database.
+ */
+const config = {
+    host: "mydb.tamk.fi",
+    user: process.env.user,
+    password: process.env.password,
+    database: process.env.database,
+    connectionLimit: 10,
+};
+const pool = mysql.createPool(config);
+
+/**
+ * Attempts to get all word pairs and the names of their languages from the database.
+ * @async
+ * @returns {Promise&lt;Array>} All word pairs with names of the languages, or an error from the database.
+ */
+module.exports.findAllWordPairs = () =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "SELECT w.id, l1.language AS language1, l1.id AS language1_id, l2.language AS language2, l2.id AS language2_id, w.word_in_language1, w.word_in_language2 FROM ((word_pairs AS w INNER JOIN languages AS l1 ON w.language1_id = l1.id) INNER JOIN languages AS l2 ON w.language2_id = l2.id) ORDER BY w.id",
+            (error, wordPairs) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(wordPairs);
+                }
+            }
+        );
+    });
+/**
+ * Attempts to get all word pairs of two specified languages and the names of the languages from the database.
+ * @async
+ * @param {string} language1 - Language one of the words has to be in.
+ * @param {string} language2 - Language the other one of the words has to be in.
+ * @returns {Promise&lt;Array>} All word pairs of the specified languages with names of the languages, or an error from the database.
+ */
+module.exports.findWordPairsByLanguages = (language1, language2) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "SELECT w.id, l1.language AS language1, l1.id AS language1_id, l2.language AS language2, l2.id AS language2_id, w.word_in_language1, w.word_in_language2 FROM ((word_pairs AS w INNER JOIN languages AS l1 ON w.language1_id = l1.id) INNER JOIN languages AS l2 ON w.language2_id = l2.id) WHERE (l1.language = ? AND l2.language = ?) OR (l1.language = ? AND l2.language = ?) ORDER BY w.id",
+            [language1, language2, language2, language1],
+            (error, wordPairs) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(wordPairs);
+                }
+            }
+        );
+    });
+/**
+ * Attempts to get a word pair with a specified id from the database.
+ * @async
+ * @param {number} id - Id of the word pair to get.
+ * @returns {Promise&lt;Object>} Word pair with the specified id, or an error from the database.
+ */
+module.exports.findWordPairById = (id) =>
+    new Promise((resolve, reject) => {
+        pool.query("SELECT * FROM word_pairs WHERE id = ?", [id], (error, wordPairs) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(wordPairs[0]);
+            }
+        });
+    });
+/**
+ * Attempts to save a word pair to the database.
+ * @async
+ * @param {object} wordPair - Word pair to save.
+ * @returns {Promise&lt;number>} The id of the saved word pair, or an error from the database.
+ */
+module.exports.saveWordPair = (wordPair) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "CALL AddWordPair(?, ?, ?, ?)",
+            [
+                wordPair.language1_id,
+                wordPair.language2_id,
+                wordPair.word_in_language1,
+                wordPair.word_in_language2,
+            ],
+            (error, out) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(out[0][0]["LAST_INSERT_ID()"]);
+                }
+            }
+        );
+    });
+/**
+ * Attempts to delete a word pair with a specified id from the database.
+ * @async
+ * @param {number} id - Id of the word pair to delete.
+ * @returns {Promise&lt;Object>} Info about what changed in the database, or an error from the database.
+ */
+module.exports.deleteWordPairById = (id) =>
+    new Promise((resolve, reject) => {
+        pool.query("DELETE FROM word_pairs WHERE id = ?", [id], (error, info) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(info);
+            }
+        });
+    });
+/**
+ * Attempts to update a word pair's translations in the database.
+ * @async
+ * @param {object} wordPair - Word pair to with new values to update to the database.
+ * @returns {Promise&lt;Object>} Info about what changed in the database, or an error from the database.
+ */
+module.exports.updateWordPair = (wordPair) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "UPDATE word_pairs SET word_in_language1 = ?, word_in_language2 = ? WHERE id = ?",
+            [wordPair.word_in_language1, wordPair.word_in_language2, wordPair.id],
+            (error, info) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(info);
+                }
+            }
+        );
+    });
+/**
+ * Attempts to get all languages from the database.
+ * @async
+ * @returns {Promise&lt;Array>} All languages in the database, or an error from the database.
+ */
+module.exports.findAllLanguages = () =>
+    new Promise((resolve, reject) => {
+        pool.query("SELECT * FROM languages", (error, languages) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(languages);
+            }
+        });
+    });
+/**
+ * Attempts to save a language to the database.
+ * @async
+ * @param {string} language - Language to save.
+ * @returns {Promise&lt;Number>} The id of the saved language, or an error from the database.
+ */
+module.exports.saveLanguage = (language) =>
+    new Promise((resolve, reject) => {
+        pool.query("CALL AddLanguage(?)", [language], (error, out) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(out[0][0]["LAST_INSERT_ID()"]);
+            }
+        });
+    });
+/**
+ * Attempts to update the name of a language in the database.
+ * @async
+ * @param {object} language - Language with new a new name to update to the database.
+ * @returns {Promise&lt;Object>} Info about what changed in the database, or an error from the database.
+ */
+module.exports.updateLanguage = (language) =>
+    new Promise((resolve, reject) => {
+        pool.query(
+            "UPDATE languages SET language = ? WHERE id = ?",
+            [language.language, language.id],
+            (error, info) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(info);
+                }
+            }
+        );
+    });
+/**
+ * Attempts to delete a language with a specified id from the database.
+ * @async
+ * @param {number} id - Id of language to delete.
+ * @returns {Promise&lt;Object>} Info about what changed in the database, or an error from the database.
+ */
+module.exports.deleteLanguageById = (id) =>
+    new Promise((resolve, reject) => {
+        pool.query("DELETE FROM languages WHERE id = ?", [id], (error, info) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(info);
+            }
+        });
+    });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database_crudrepository.html">database/crudrepository</a></li><li><a href="module-frontend_src_getUrl.html">frontend/src/getUrl</a></li><li><a href="module-routes_languages.html">routes/languages</a></li><li><a href="module-routes_words.html">routes/words</a></li></ul><h3>Classes</h3><ul><li><a href="AnsweringSection.html">AnsweringSection</a></li><li><a href="App.html">App</a></li><li><a href="ConnectionSpinner.html">ConnectionSpinner</a></li><li><a href="EditableContent.html">EditableContent</a></li><li><a href="EditableLanguage.html">EditableLanguage</a></li><li><a href="EditableWord.html">EditableWord</a></li><li><a href="EditLanguages.html">EditLanguages</a></li><li><a href="EditWordPairs.html">EditWordPairs</a></li><li><a href="Feedback.html">Feedback</a></li><li><a href="HomePage.html">HomePage</a></li><li><a href="LanguageSelectTooltip.html">LanguageSelectTooltip</a></li><li><a href="LearnOptions.html">LearnOptions</a></li><li><a href="LearnPage.html">LearnPage</a></li><li><a href="TeachPage.html">TeachPage</a></li><li><a href="TeachWordsOptions.html">TeachWordsOptions</a></li><li><a href="TeachWordsPage.html">TeachWordsPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jan 14 2022 13:45:30 GMT+0200 (Itä-Euroopan normaaliaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

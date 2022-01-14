@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: frontend/src/TeachWordsPage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: frontend/src/TeachWordsPage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import EditWordPairs from "./EditWordPairs";
+import TeachWordsOptions from "./TeachWordsOptions";
+
+/**
+ * A component that renders the word editing page of the app.
+ * First prompts the user to select languages to edit words from,
+ * then lets them edit those word pairs.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
+class TeachWordsPage extends React.Component {
+    /**
+     * @property {boolean} showOptions - Whether to render the options or the word pair editing section.
+     * @property {number} language1Id - The id of the language of the first editing column words.
+     * @property {number} language2Id - The id of the language of the second editing column words.
+     * @property {string} language1 - The language of the first editing column words.
+     * @property {string} language2 - The language of the second editing column words.
+     */
+    state = {
+        showOptions: true,
+        language1Id: NaN,
+        language2Id: NaN,
+        language1: undefined,
+        language2: undefined,
+    };
+    /**
+     * Move from the language select to the word pair editing section.
+     * Set the languages to edit words from.
+     * @function
+     * @param {number} language1Id - The id of the language of the first editing column words.
+     * @param {number} language2Id - The id of the language of the second editing column words.
+     * @param {string} language1 - The language of the first editing column words.
+     * @param {string} language2 - The language of the second editing column words.
+     */
+    moveToEditing = (language1Id, language2Id, language1, language2) => {
+        this.setState({
+            showOptions: false,
+            language1Id: language1Id,
+            language2Id: language2Id,
+            language1: language1,
+            language2: language2,
+        });
+    };
+    /**
+     * Renders the word pair editing page:
+     * First prompts the user to select languages to edit words from,
+     * then lets them edit those word pairs.
+     * @returns {React.Component} A view in the word editing page.
+     */
+    render() {
+        if (this.state.showOptions) {
+            return &lt;TeachWordsOptions continue={this.moveToEditing} />;
+        } else {
+            return (
+                &lt;EditWordPairs
+                    language1Id={this.state.language1Id}
+                    language2Id={this.state.language2Id}
+                    language1={this.state.language1}
+                    language2={this.state.language2}
+                    goBack={() => {
+                        this.setState({ showOptions: true });
+                    }}
+                />
+            );
+        }
+    }
+}
+export default TeachWordsPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database_crudrepository.html">database/crudrepository</a></li><li><a href="module-frontend_src_getUrl.html">frontend/src/getUrl</a></li><li><a href="module-routes_languages.html">routes/languages</a></li><li><a href="module-routes_words.html">routes/words</a></li></ul><h3>Classes</h3><ul><li><a href="AnsweringSection.html">AnsweringSection</a></li><li><a href="App.html">App</a></li><li><a href="ConnectionSpinner.html">ConnectionSpinner</a></li><li><a href="EditableContent.html">EditableContent</a></li><li><a href="EditableLanguage.html">EditableLanguage</a></li><li><a href="EditableWord.html">EditableWord</a></li><li><a href="EditLanguages.html">EditLanguages</a></li><li><a href="EditWordPairs.html">EditWordPairs</a></li><li><a href="Feedback.html">Feedback</a></li><li><a href="HomePage.html">HomePage</a></li><li><a href="LanguageSelectTooltip.html">LanguageSelectTooltip</a></li><li><a href="LearnOptions.html">LearnOptions</a></li><li><a href="LearnPage.html">LearnPage</a></li><li><a href="TeachPage.html">TeachPage</a></li><li><a href="TeachWordsOptions.html">TeachWordsOptions</a></li><li><a href="TeachWordsPage.html">TeachWordsPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jan 14 2022 13:45:31 GMT+0200 (Itä-Euroopan normaaliaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

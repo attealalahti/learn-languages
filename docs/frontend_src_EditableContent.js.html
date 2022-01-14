@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: frontend/src/EditableContent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: frontend/src/EditableContent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+/**
+ * Callback for saving changes of the content of the component to the database.
+ * @callback saveChangesCallback
+ * @async
+ * @param {string} newContent - New version of the content.
+ */
+
+/**
+ * A component that renders a button that when clicked becomes a text input.
+ * The text on the button changes to what is typed into the input.
+ * @property {string} props.content - Button text and input default value.
+ * @property {saveChangesCallback} props.saveChanges - Callback for saving changes of the content to the database.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
+class EditableContent extends React.Component {
+    /**
+     * @property {boolean} editing - Whether or not component is in editing mode to render text input.
+     * @property {string} content - Current button text and input default value.
+     */
+    state = { editing: false, content: this.props.content };
+    /**
+     * Current text in the input element.
+     * @type {string}
+     */
+    currentInput = this.props.content;
+    /**
+     * When an edit to the content is submitted, the new version is saved to the database and editing mode is exited.
+     * @function
+     * @param {object} event - The form submit event.
+     */
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        await this.props.saveChanges(this.currentInput);
+        this.setState({ editing: false, content: this.currentInput });
+    };
+    /**
+     * When the value in the text input element changes, the [currentInput]{@link EditableContent#currentInput} variable is updated.
+     * @function
+     * @param {object} event - The text input change event.
+     */
+    handleChange = (event) => {
+        this.currentInput = event.target.value;
+    };
+    /**
+     * When the component updates and the content prop changes, update state about it.
+     * After coming into editing mode, focus on the input element.
+     * When its focus is lost, exit editing mode.
+     * @param {object} previousProps - Props from the previous state.
+     * @param {object} previousState - Previous state.
+     */
+    componentDidUpdate(previousProps, previousState) {
+        if (this.state.editing &amp;&amp; !previousState.editing) {
+            let input = document.getElementById("ContentInput");
+            input.focus();
+            input.addEventListener("blur", (event) => {
+                this.currentInput = this.state.content;
+                this.setState({ editing: false });
+            });
+        }
+        if (previousProps.content !== this.props.content) {
+            this.currentInput = this.props.content;
+            this.setState({ content: this.props.content });
+        }
+    }
+    /**
+     * When editing, renders a text input.
+     * When not editing, renders a button.
+     * @returns {React.Component} A button or a text input.
+     */
+    render() {
+        if (this.state.editing) {
+            return (
+                &lt;Form onSubmit={this.handleSubmit} className="EditableContent">
+                    &lt;Form.Control
+                        id="ContentInput"
+                        defaultValue={this.state.content}
+                        onChange={this.handleChange}
+                        autoComplete="off"
+                    />
+                &lt;/Form>
+            );
+        } else {
+            return (
+                &lt;Button
+                    variant="outline-dark"
+                    onClick={() => this.setState({ editing: true })}
+                    className="EditableContent"
+                >
+                    {this.state.content}
+                &lt;/Button>
+            );
+        }
+    }
+}
+
+export default EditableContent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database_crudrepository.html">database/crudrepository</a></li><li><a href="module-frontend_src_getUrl.html">frontend/src/getUrl</a></li><li><a href="module-routes_languages.html">routes/languages</a></li><li><a href="module-routes_words.html">routes/words</a></li></ul><h3>Classes</h3><ul><li><a href="AnsweringSection.html">AnsweringSection</a></li><li><a href="App.html">App</a></li><li><a href="ConnectionSpinner.html">ConnectionSpinner</a></li><li><a href="EditableContent.html">EditableContent</a></li><li><a href="EditableLanguage.html">EditableLanguage</a></li><li><a href="EditableWord.html">EditableWord</a></li><li><a href="EditLanguages.html">EditLanguages</a></li><li><a href="EditWordPairs.html">EditWordPairs</a></li><li><a href="Feedback.html">Feedback</a></li><li><a href="HomePage.html">HomePage</a></li><li><a href="LanguageSelectTooltip.html">LanguageSelectTooltip</a></li><li><a href="LearnOptions.html">LearnOptions</a></li><li><a href="LearnPage.html">LearnPage</a></li><li><a href="TeachPage.html">TeachPage</a></li><li><a href="TeachWordsOptions.html">TeachWordsOptions</a></li><li><a href="TeachWordsPage.html">TeachWordsPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jan 14 2022 13:45:30 GMT+0200 (Itä-Euroopan normaaliaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

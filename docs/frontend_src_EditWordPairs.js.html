@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: frontend/src/EditWordPairs.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: frontend/src/EditWordPairs.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import axios from "axios";
+import getUrl from "./getUrl";
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
+import EditableWord from "./EditableWord";
+import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
+import ConnectionSpinner from "./ConnectionSpinner";
+
+/**
+ * Callback to move back from editing word pairs to selecting which word pairs to edit.
+ * @callback goBackTeachCallBack
+ */
+
+/**
+ * A component that renders a UI to add, edit and delete word pairs from two specified languages.
+ * All changes are updated to the database.
+ * Word pairs are displayed in a table.
+ * @property {string} props.language1 - The language the first column of words are in.
+ * @property {string} props.language2 - The language the second column of words are in.
+ * @property {number} props.language1Id - The id of the language the first column of words are in.
+ * @property {number} props.language2Id - The id of the language the second column of words are in.
+ * @property {goBackTeachCallBack} props.goBack - Callback called when the "Back" button is clicked.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
+class EditWordPairs extends React.Component {
+    /**
+     * @property {boolean} loading - Whether or not data is being fetched from the database.
+     * @property {boolean} error - Whether or not there was an error with communicating with the database.
+     * @property {boolean} connecting - Whether or not there is currently an attempt to connect to the database.
+     * @property {Array&lt;Object>} wordPairs - Word pairs to display in the table.
+     */
+    state = {
+        loading: true,
+        error: false,
+        connecting: false,
+        wordPairs: [],
+    };
+    /**
+     * When the component first loads, tries to fetch all word pairs from the specified languages from the database.
+     * If this fails, sets the error state.
+     */
+    async componentDidMount() {
+        try {
+            let wordsResponse = await axios.get(
+                `${getUrl()}/words?from=${this.props.language1}&amp;to=${
+                    this.props.language2
+                }`
+            );
+            this.setState({ loading: false, wordPairs: wordsResponse.data });
+        } catch (error) {
+            this.setState({ loading: false, error: true });
+        }
+    }
+    /**
+     * Attempts to add a new blank word pair to this component and the database.
+     * The languages of the word pair are the same as the languages of all other word pairs
+     * currently displayed in the table.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     */
+    addRow = async () => {
+        this.setState({ connecting: true });
+        try {
+            let newWordPair = {
+                language1: this.props.language1,
+                language2: this.props.language2,
+                language1_id: this.props.language1Id,
+                language2_id: this.props.language2Id,
+                word_in_language1: "",
+                word_in_language2: "",
+            };
+            let newWordPairResponse = await axios.post(`${getUrl()}/words`, newWordPair);
+            let newWordPairs = [...this.state.wordPairs, newWordPairResponse.data];
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
+    };
+    /**
+     * Attempts to delete a word pair from this component and the database.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     * @param {number} id - Id of the word pair to be deleted.
+     */
+    deleteRow = async (id) => {
+        this.setState({ connecting: true });
+        try {
+            let newWordPairs = this.state.wordPairs.filter(
+                (wordPair) => wordPair.id !== id
+            );
+            await axios.delete(`${getUrl()}/words/${id}`);
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
+    };
+    /**
+     * Attempts to update changed word pair to the database.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     * @param {object} updatedWordPair - New version of the word pair to be updated to the database.
+     */
+    updateWordPairs = async (updatedWordPair) => {
+        this.setState({ connecting: true });
+        try {
+            await axios.patch(`${getUrl()}/words`, updatedWordPair);
+            let index = this.state.wordPairs.findIndex(
+                (wordPair) => wordPair.id === updatedWordPair.id
+            );
+            let newWordPairs = Array.from(this.state.wordPairs);
+            newWordPairs.splice(index, 1, updatedWordPair);
+            this.setState({ wordPairs: newWordPairs, connecting: false });
+        } catch (error) {
+            this.setState({ error: true, connecting: false });
+        }
+    };
+    /**
+     * Renders a view on the word pair editing page:
+     * a loading animation when loading,
+     * an error message when an error has occurred
+     * or a table of word pairs that can be edited or deleted
+     * and a button to add a new word pair.
+     * @returns {React.Component} A view on the word pair editing page.
+     */
+    render() {
+        if (this.state.loading) {
+            return (
+                &lt;Spinner animation="border" role="status">
+                    &lt;div className="visually-hidden">Loading...&lt;/div>
+                &lt;/Spinner>
+            );
+        } else if (this.state.error) {
+            return (
+                &lt;Alert variant="danger">
+                    Error
+                    &lt;br />
+                    Database connection failed
+                &lt;/Alert>
+            );
+        } else {
+            return (
+                &lt;Card>
+                    &lt;Card.Body>
+                        &lt;Table striped bordered>
+                            &lt;thead>
+                                &lt;tr>
+                                    &lt;th>{this.props.language1}&lt;/th>
+                                    &lt;th>{this.props.language2}&lt;/th>
+                                    &lt;th>&lt;/th>
+                                &lt;/tr>
+                            &lt;/thead>
+                            &lt;tbody>
+                                {this.state.wordPairs.map((wordPair, index) => (
+                                    &lt;tr key={index}>
+                                        &lt;th>
+                                            &lt;EditableWord
+                                                content={wordPair.word_in_language1}
+                                                wordPair={wordPair}
+                                                languageIndex={0}
+                                                updateWordPairs={this.updateWordPairs}
+                                            />
+                                        &lt;/th>
+                                        &lt;th>
+                                            &lt;EditableWord
+                                                content={wordPair.word_in_language2}
+                                                wordPair={wordPair}
+                                                languageIndex={1}
+                                                updateWordPairs={this.updateWordPairs}
+                                            />
+                                        &lt;/th>
+                                        &lt;td style={{ width: "50px" }}>
+                                            &lt;Button
+                                                variant="danger"
+                                                onClick={() =>
+                                                    this.deleteRow(wordPair.id)
+                                                }
+                                            >
+                                                Delete
+                                            &lt;/Button>
+                                        &lt;/td>
+                                    &lt;/tr>
+                                ))}
+                            &lt;/tbody>
+                        &lt;/Table>
+                        &lt;Button style={{ float: "left" }} onClick={this.addRow}>
+                            Add row
+                        &lt;/Button>
+                        &lt;Button style={{ float: "right" }} onClick={this.props.goBack}>
+                            Back
+                        &lt;/Button>
+                        &lt;ConnectionSpinner connecting={this.state.connecting} />
+                    &lt;/Card.Body>
+                &lt;/Card>
+            );
+        }
+    }
+}
+export default EditWordPairs;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database_crudrepository.html">database/crudrepository</a></li><li><a href="module-frontend_src_getUrl.html">frontend/src/getUrl</a></li><li><a href="module-routes_languages.html">routes/languages</a></li><li><a href="module-routes_words.html">routes/words</a></li></ul><h3>Classes</h3><ul><li><a href="AnsweringSection.html">AnsweringSection</a></li><li><a href="App.html">App</a></li><li><a href="ConnectionSpinner.html">ConnectionSpinner</a></li><li><a href="EditableContent.html">EditableContent</a></li><li><a href="EditableLanguage.html">EditableLanguage</a></li><li><a href="EditableWord.html">EditableWord</a></li><li><a href="EditLanguages.html">EditLanguages</a></li><li><a href="EditWordPairs.html">EditWordPairs</a></li><li><a href="Feedback.html">Feedback</a></li><li><a href="HomePage.html">HomePage</a></li><li><a href="LanguageSelectTooltip.html">LanguageSelectTooltip</a></li><li><a href="LearnOptions.html">LearnOptions</a></li><li><a href="LearnPage.html">LearnPage</a></li><li><a href="TeachPage.html">TeachPage</a></li><li><a href="TeachWordsOptions.html">TeachWordsOptions</a></li><li><a href="TeachWordsPage.html">TeachWordsPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jan 14 2022 13:45:30 GMT+0200 (Itä-Euroopan normaaliaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

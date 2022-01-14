@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/languages.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/languages.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require("express");
+const connection = require("../database/crudrepository.js");
+const router = express.Router();
+const Validator = require("jsonschema").Validator;
+const validator = new Validator();
+/**
+ * Processes requests to /languages.
+ * @author Atte Ala-Lahti
+ * @module
+ */
+/**
+ * Attempts to get all languages from the database to send them to the requester.
+ * @name GET request
+ * @function
+ * @returns {Array&lt;Object>} All languages in the database.
+ */
+router.get("/", async (req, res) => {
+    try {
+        let allLanguages = await connection.findAllLanguages();
+        res.send(allLanguages);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+/**
+ * Schema for validating POST requests.
+ */
+const postSchema = {
+    type: "object",
+    properties: { language: { type: "string" } },
+    required: ["language"],
+};
+/**
+ * Attempts to save a language to the database.
+ * Sends back an error if the given language object does not have the right kind of data in the right fields.
+ * @name POST request
+ * @function
+ * @param {object} req.body - Language to be saved.
+ * @returns {object} The saved language with id from the database added, or an error.
+ */
+router.post("/", async (req, res) => {
+    const validation = validator.validate(req.body, postSchema);
+    if (validation.errors.length > 0) {
+        res.status(400).send(validation.errors);
+    } else {
+        try {
+            let id = await connection.saveLanguage(req.body.language);
+            res.status(201).send({ ...req.body, id: id });
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
+});
+/**
+ * Schema for validating PATCH requests.
+ */
+const patchSchema = {
+    type: "object",
+    properties: {
+        id: { type: "number", min: "0" },
+        language: { type: "string" },
+    },
+    required: ["id", "language"],
+};
+/**
+ * Attempts to update a language in the database.
+ * Sends back an error if the given language object does not have the right kind of data in the right fields.
+ * @name PATCH request
+ * @function
+ * @param {object} req.body - Language to be updated.
+ * @returns {status} 200 if something changed, 204 if nothing changed, or an error.
+ */
+router.patch("/", async (req, res) => {
+    const validation = validator.validate(req.body, patchSchema);
+    if (validation.errors.length > 0) {
+        res.status(400).send(validation.errors);
+    } else {
+        try {
+            let info = await connection.updateLanguage(req.body);
+            if (info.changedRows > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(204);
+            }
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
+});
+/**
+ * Attempts to delete a language with a given id from the database.
+ * Sends back a 404 error if nothing was deleted.
+ * @name DELETE request
+ * @example DELETE /languages/1
+ * @function
+ * @param {number} id - Id of the language to be deleted.
+ * @returns {status} 204 status, or an error.
+ */
+router.delete("/:id([0-9]+)", async (req, res) => {
+    try {
+        let info = await connection.deleteLanguageById(req.params.id);
+        if (info.affectedRows > 0) {
+            res.sendStatus(204);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+module.exports = router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-database_crudrepository.html">database/crudrepository</a></li><li><a href="module-frontend_src_getUrl.html">frontend/src/getUrl</a></li><li><a href="module-routes_languages.html">routes/languages</a></li><li><a href="module-routes_words.html">routes/words</a></li></ul><h3>Classes</h3><ul><li><a href="AnsweringSection.html">AnsweringSection</a></li><li><a href="App.html">App</a></li><li><a href="ConnectionSpinner.html">ConnectionSpinner</a></li><li><a href="EditableContent.html">EditableContent</a></li><li><a href="EditableLanguage.html">EditableLanguage</a></li><li><a href="EditableWord.html">EditableWord</a></li><li><a href="EditLanguages.html">EditLanguages</a></li><li><a href="EditWordPairs.html">EditWordPairs</a></li><li><a href="Feedback.html">Feedback</a></li><li><a href="HomePage.html">HomePage</a></li><li><a href="LanguageSelectTooltip.html">LanguageSelectTooltip</a></li><li><a href="LearnOptions.html">LearnOptions</a></li><li><a href="LearnPage.html">LearnPage</a></li><li><a href="TeachPage.html">TeachPage</a></li><li><a href="TeachWordsOptions.html">TeachWordsOptions</a></li><li><a href="TeachWordsPage.html">TeachWordsPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jan 14 2022 13:45:31 GMT+0200 (Itä-Euroopan normaaliaika)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
