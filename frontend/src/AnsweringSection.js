@@ -55,7 +55,6 @@ class AnsweringSection extends React.Component {
      * all words from the languages translations are supposed to be made from and to.
      * Word pairs are then shuffled.
      * If this fails, sets the error state.
-     * @author Atte Ala-Lahti
      */
     async componentDidMount() {
         try {
