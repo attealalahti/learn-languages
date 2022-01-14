@@ -61,6 +61,12 @@ class EditLanguages extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
+    /**
+     * Attempts to delete a language from this component and the database.
+     * @function
+     * @async
+     * @param {number} id - Id of the language to be deleted.
+     */
     deleteLanguage = async (id) => {
         this.setState({ connecting: true });
         try {
@@ -73,6 +79,14 @@ class EditLanguages extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
+    /**
+     * Renders a view on the language editing page:
+     * a loading animation when loading,
+     * an error message when an error has occurred
+     * or a table of languages that can be edited or deleted
+     * and a button to add a new language.
+     * @returns {React.Component} A view on the language editing page.
+     */
     render() {
         if (this.state.loading) {
             return (
