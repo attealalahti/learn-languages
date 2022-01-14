@@ -11,6 +11,19 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
+/**
+ * Callback to start translating words and send language information to {@link AnsweringSection} component.
+ * @callback continueLearnCallback
+ * @param {string} languageFrom - Language to translate words from.
+ * @param {string} languageTo - Language to translate words into.
+ */
+
+/**
+ * A component that prompts the user to select two languages to study words from.
+ * @property {continueLearnCallback} props.continue - Callback called with the selected languages.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class LearnOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined, showTooltip: false };
     componentDidMount = async () => {
