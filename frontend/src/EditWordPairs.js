@@ -100,6 +100,13 @@ class EditWordPairs extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
+    /**
+     * Attempts to update changed word pair to the database.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     * @param {object} updatedWordPair - New version of the word pair to be updated to the database.
+     */
     updateWordPairs = async (updatedWordPair) => {
         this.setState({ connecting: true });
         try {
@@ -114,6 +121,14 @@ class EditWordPairs extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
+    /**
+     * Renders a view on the word pair editing page:
+     * a loading animation when loading,
+     * an error message when an error has occurred
+     * or a table of word pairs that can be edited or deleted
+     * and a button to add a new word pair.
+     * @returns {React.Component} A view on the word pair editing page.
+     */
     render() {
         if (this.state.loading) {
             return (
