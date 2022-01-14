@@ -30,6 +30,10 @@ class EditLanguages extends React.Component {
         connecting: false,
         languages: [],
     };
+    /**
+     * When the component first loads, tries to fetch all languages from the database.
+     * If this fails, sets the error state.
+     */
     async componentDidMount() {
         try {
             let languagesResponse = await axios.get(`${getUrl()}/languages`);
@@ -38,6 +42,11 @@ class EditLanguages extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    /**
+     * Attempts to add a new blank language to this component and the database.
+     * @function
+     * @async
+     */
     addLanguage = async () => {
         this.setState({ connecting: true });
         try {
