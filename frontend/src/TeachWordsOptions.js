@@ -14,7 +14,7 @@ import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
 /**
  * Callback to start editing word pairs and send language information to {@link EditWordPairs} component.
- * @callback continueCallback
+ * @callback continueTeachCallback
  * @param {number} language1Id - The id of the language of the first column words.
  * @param {number} language2Id - The id of the language of the second column words.
  * @param {string} language1 - The language of the first column words.
@@ -23,7 +23,7 @@ import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
 /**
  * A component that prompts the user to select two languages to edit words from.
- * @property {continueCallback} props.continue - Callback called with the selected languages and their ids.
+ * @property {continueTeachCallback} props.continue - Callback called with the selected languages and their ids.
  * @author Atte Ala-Lahti
  * @extends React.Component
  */
@@ -47,11 +47,20 @@ class TeachWordsOptions extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    /**
+     * When the languages are selected and they are different from each other,
+     * Move on to editing the words of those languages by passing the language information on.
+     * If the selected languages are the same, show a tooltip to prompt the user to select different languages.
+     * @function
+     * @param {object} event - The form submit event.
+     */
     handleSubmit = (event) => {
         event.preventDefault();
+        // Get the ids of the selected languages
         let language1Id = Number(document.getElementById("lang1").value);
         let language2Id = Number(document.getElementById("lang2").value);
         if (language1Id !== language2Id) {
+            // Get the actual language strings based on the ids.
             let language1 = this.state.languages.find(
                 (lang) => lang.id === language1Id
             ).language;
@@ -63,6 +72,13 @@ class TeachWordsOptions extends React.Component {
             this.setState({ showTooltip: true });
         }
     };
+    /**
+     * Renders a view in the language selection section:
+     * a loading animation when loading,
+     * an error message when an error has occurred
+     * or options to select two languages to edit words from.
+     * @returns {React.Component} A view in the language selection section.
+     */
     render() {
         if (this.state.loading) {
             return (
