@@ -44,6 +44,7 @@ class EditLanguages extends React.Component {
     }
     /**
      * Attempts to add a new blank language to this component and the database.
+     * If this fails, sets the error state.
      * @function
      * @async
      */
