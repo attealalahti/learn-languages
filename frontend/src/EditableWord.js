@@ -1,6 +1,21 @@
 import React from "react";
 import EditableContent from "./EditableContent";
 
+/**
+ * Callback to update the word pair to the database.
+ * @callback updateWordPairsCallback
+ * @param {object} updatedWordPair - New version of the word pair to be updated to the database.
+ */
+
+/**
+ * A component that renders and passes all props to an {@link EditableContent} component and
+ * contains the {@link saveChangesCallback} for it to save changes to a word pair.
+ * @property {number} props.languageIndex - Whether this EditableWord represents the first or the second word in the word pair.
+ * @property {object} props.wordPair - Original word pair this word belongs to.
+ * @property {updateWordPairsCallback} props.updateWordPairs - Callback to update the word pair to the database.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class EditableWord extends React.Component {
     saveWord = async (newContent) => {
         let newWordPair;
