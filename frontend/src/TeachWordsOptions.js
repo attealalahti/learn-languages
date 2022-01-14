@@ -28,15 +28,25 @@ import LanguageSelectTooltip from "./LanguageSelectTooltip";
  * @extends React.Component
  */
 class TeachWordsOptions extends React.Component {
-    state = { loading: true, error: false, languages: undefined, showTooltip: false };
-    componentDidMount = async () => {
+    /**
+     * @property {boolean} loading - Whether or not data is being fetched from the database.
+     * @property {boolean} error - Whether or not there was an error with communicating with the database.
+     * @property {Array<Object>} languages - Languages to select from.
+     * @property {boolean} showTooltip - Whether or not to show a tooltip about selecting different languages.
+     */
+    state = { loading: true, error: false, languages: [], showTooltip: false };
+    /**
+     * When the component first loads, tries to fetch all languages from the database.
+     * If this fails, sets the error state.
+     */
+    async componentDidMount() {
         try {
             let languagesResponse = await axios.get(`${getUrl()}/languages`);
             this.setState({ loading: false, languages: languagesResponse.data });
         } catch (error) {
             this.setState({ loading: false, error: true });
         }
-    };
+    }
     handleSubmit = (event) => {
         event.preventDefault();
         let language1Id = Number(document.getElementById("lang1").value);
