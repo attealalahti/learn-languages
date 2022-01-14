@@ -11,9 +11,9 @@ import LearnOptions from "./LearnOptions";
  */
 class LearnPage extends React.Component {
     /**
-     * @property {boolean} props.showOptions - Whether to render the options or the answering section.
-     * @property {string} props.languageFrom - Language to translate words from.
-     * @property {string} props.languageTo - Language to translate words into.
+     * @property {boolean} showOptions - Whether to render the options or the answering section.
+     * @property {string} languageFrom - Language to translate words from.
+     * @property {string} languageTo - Language to translate words into.
      */
     state = { showOptions: true, languageFrom: undefined, languageTo: undefined };
     /**
