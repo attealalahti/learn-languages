@@ -9,6 +9,23 @@ import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import ConnectionSpinner from "./ConnectionSpinner";
 
+/**
+ * Callback to move back from editing word pairs to selecting which word pairs to edit.
+ * @callback goBackTeachCallBack
+ */
+
+/**
+ * A component that renders a UI to add, edit and delete word pairs.
+ * All changes are updated to the database.
+ * Word pairs are displayed in a table.
+ * @property {string} props.language1 - The language the first column of words are in.
+ * @property {string} props.language2 - The language the second column of words are in.
+ * @property {number} props.language1Id - The id of the language the first column of words are in.
+ * @property {number} props.language2Id - The id of the language the second column of words are in.
+ * @property {goBackTeachCallBack} props.goBack - Callback called when the "Back" button is clicked.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class EditWordPairs extends React.Component {
     state = {
         loading: true,
