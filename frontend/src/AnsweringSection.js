@@ -13,14 +13,14 @@ import Alert from "react-bootstrap/Alert";
 
 /**
  * Callback to set the state of {@link LearnPage} back to the language selection stage.
- * @callback goBackCallBack
+ * @callback goBackLearnCallBack
  */
 
 /**
  * A component that prompts the user to translate words and checks if they got them correct.
  * @property {string} props.languageFrom - Language to translate from.
  * @property {string} props.languageTo - Language to translate into.
- * @property {goBackCallBack} props.goBack - Callback to set the state of {@link LearnPage} back to the language selection stage.
+ * @property {goBackLearnCallBack} props.goBack - Callback to set the state of {@link LearnPage} back to the language selection stage.
  * @author Atte Ala-Lahti
  * @extends React.Component
  */
