@@ -10,7 +10,20 @@ import { LinkContainer } from "react-router-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import ConnectionSpinner from "./ConnectionSpinner";
 
+/**
+ * A component that renders a UI to add, edit and delete languages.
+ * All changes are updated to the database.
+ * Languages are displayed in a table.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class EditLanguages extends React.Component {
+    /**
+     * @property {boolean} loading - Whether or not data is being fetched from the database.
+     * @property {boolean} error - Whether or not there was an error with communicating with the database.
+     * @property {boolean} connecting - Whether or not there is currently an attempt to connect to the database.
+     * @property {Array<Object>} languages - Languages to display in the table.
+     */
     state = {
         loading: true,
         error: false,
