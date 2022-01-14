@@ -64,6 +64,7 @@ class EditLanguages extends React.Component {
     };
     /**
      * Attempts to delete a language from this component and the database.
+     * If this fails, sets the error state.
      * @function
      * @async
      * @param {number} id - Id of the language to be deleted.
