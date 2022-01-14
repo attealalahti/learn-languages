@@ -81,6 +81,13 @@ class EditWordPairs extends React.Component {
             this.setState({ error: true, connecting: false });
         }
     };
+    /**
+     * Attempts to delete a word pair from this component and the database.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     * @param {number} id - Id of the word pair to be deleted.
+     */
     deleteRow = async (id) => {
         this.setState({ connecting: true });
         try {
