@@ -12,6 +12,21 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import LanguageSelectTooltip from "./LanguageSelectTooltip";
 
+/**
+ * Callback to start editing word pairs and send language information to {@link EditWordPairs} component.
+ * @callback continueCallback
+ * @param {number} language1Id - The id of the language of the first column words.
+ * @param {number} language2Id - The id of the language of the second column words.
+ * @param {string} language1 - The language of the first column words.
+ * @param {string} language2 - The language of the second column words.
+ */
+
+/**
+ * A component that prompts the user to select two languages to edit words from.
+ * @property {continueCallback} props.continue - Callback called with the selected languages and their ids.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class TeachWordsOptions extends React.Component {
     state = { loading: true, error: false, languages: undefined, showTooltip: false };
     componentDidMount = async () => {
