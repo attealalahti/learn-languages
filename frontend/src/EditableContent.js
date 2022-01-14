@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 /**
  * Callback for saving changes of the content of the component to the database.
  * @callback saveChangesCallback
+ * @async
  * @param {string} newContent - New version of the content.
  */
 
