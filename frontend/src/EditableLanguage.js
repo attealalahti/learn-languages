@@ -32,6 +32,7 @@ class EditableLanguage extends React.Component {
     /**
      * Attempts to update a language in the database with a new name.
      * @function
+     * @async
      * @param {string} newContent - New name for the language.
      */
     saveLanguage = async (newContent) => {
