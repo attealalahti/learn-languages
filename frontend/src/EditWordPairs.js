@@ -15,7 +15,7 @@ import ConnectionSpinner from "./ConnectionSpinner";
  */
 
 /**
- * A component that renders a UI to add, edit and delete word pairs.
+ * A component that renders a UI to add, edit and delete word pairs from two specified languages.
  * All changes are updated to the database.
  * Word pairs are displayed in a table.
  * @property {string} props.language1 - The language the first column of words are in.
@@ -27,12 +27,22 @@ import ConnectionSpinner from "./ConnectionSpinner";
  * @extends React.Component
  */
 class EditWordPairs extends React.Component {
+    /**
+     * @property {boolean} loading - Whether or not data is being fetched from the database.
+     * @property {boolean} error - Whether or not there was an error with communicating with the database.
+     * @property {boolean} connecting - Whether or not there is currently an attempt to connect to the database.
+     * @property {Array<Object>} wordPairs - Word pairs to display in the table.
+     */
     state = {
         loading: true,
         error: false,
         connecting: false,
         wordPairs: [],
     };
+    /**
+     * When the component first loads, tries to fetch all word pairs from the specified languages from the database.
+     * If this fails, sets the error state.
+     */
     async componentDidMount() {
         try {
             let wordsResponse = await axios.get(
