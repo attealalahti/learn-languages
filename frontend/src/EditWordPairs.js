@@ -55,6 +55,14 @@ class EditWordPairs extends React.Component {
             this.setState({ loading: false, error: true });
         }
     }
+    /**
+     * Attempts to add a new blank word pair to this component and the database.
+     * The languages of the word pair are the same as the languages of all other word pairs
+     * currently displayed in the table.
+     * If this fails, sets the error state.
+     * @function
+     * @async
+     */
     addRow = async () => {
         this.setState({ connecting: true });
         try {
