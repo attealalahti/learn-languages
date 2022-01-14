@@ -4,7 +4,6 @@ const express = require("express");
  * @author Atte Ala-Lahti
  */
 const app = express();
-const cors = require("cors");
 const words = require("./routes/words.js");
 const languages = require("./routes/languages.js");
 
@@ -13,7 +12,6 @@ const server = app.listen(port, () => {
     console.log(`Listening on port ${server.address().port}`);
 });
 
-app.use(cors());
 app.use(express.json());
 app.use("/words", words);
 app.use("/languages", languages);
