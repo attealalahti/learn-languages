@@ -4,7 +4,17 @@ import Button from "react-bootstrap/Button";
 import CardGroup from "react-bootstrap/CardGroup";
 import { LinkContainer } from "react-router-bootstrap";
 
+/**
+ * A component that renders the home page of the application.
+ * Contains links to Learn and Teach pages.
+ * @author Atte Ala-Lahti
+ * @extends React.Component
+ */
 class HomePage extends React.Component {
+    /**
+     * Renders the home page of the app with links to /learn and /teach.
+     * @returns {React.Component} The home page.
+     */
     render() {
         return (
             <Card>
