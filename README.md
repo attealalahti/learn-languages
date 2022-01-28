@@ -5,6 +5,7 @@ This is a full stack project created for school. The frontend was created with R
 
 The application is hosted on Heroku here: https://ala-lahti-learn-languages.herokuapp.com/
 
+# Screenshots
 ![Learn page options](screenshots/learnoptions.png)
 ![Learn page](screenshots/learn.png)
 ![Learn page results](screenshots/learnresults.png)
