@@ -5,8 +5,6 @@ This is a full stack project created for school. The frontend will be created wi
 
 The application is hosted on Heroku here: https://ala-lahti-learn-languages.herokuapp.com/
 
-Screencast link: https://youtu.be/j94Z1Kxwx2o
-
 ![Learn page options](screenshots/learnoptions.png)
 ![Learn page](screenshots/learn.png)
 ![Learn page results](screenshots/learnresults.png)
